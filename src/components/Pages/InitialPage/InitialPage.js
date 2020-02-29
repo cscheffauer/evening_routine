@@ -5,16 +5,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 
 import './InitialPage.css';
 import { GOALS_ROUTE } from '../../../constants';
 
 const useStyles = makeStyles(theme => ({
     //toolbar: theme.mixins.toolbar,
-    heading: {
+    boxHeading: {
         marginTop: '10vh'
     },
-    subline: {
+    boxSubline: {
         marginTop: '5vh'
     },
     link: {
@@ -30,13 +31,13 @@ const InitialPage = (props) => {
     const classes = useStyles();
     const { onRouteChange } = props;
     return (
-        <Fragment>
-            <Box className={classes.heading} textAlign="center">
+        <Container>
+            <Box className={classes.boxHeading} textAlign="center">
                 <Typography variant="h2">
                     Welcome to your Evening Routine
                 </Typography>
             </Box>
-            <Box className={classes.subline} textAlign="center">
+            <Box className={classes.boxSubline} textAlign="center">
                 <Typography variant="h4">
                     To start your evening routine, please fulfill your <Link className={classes.link} onClick={() => onRouteChange(GOALS_ROUTE)}>goals</Link> first.
                 </Typography>
@@ -50,9 +51,9 @@ const InitialPage = (props) => {
                     startIcon={<PlayCircleOutlineIcon />}
                 >
                     Start
-      </Button>
+                </Button>
             </Box>
-        </Fragment>
+        </Container>
     );
 }
 
