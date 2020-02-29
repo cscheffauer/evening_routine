@@ -6,7 +6,7 @@
 
 ## [Demo](https://cscheffauer.github.io/eveningroutine)
 
- End the day in the right way with this Evening Routine App.
+ End the day the right way with this Evening Routine App.
 
   - Set your personal goals
   - Start your evening routine day by day
@@ -16,6 +16,9 @@
     - Review your goals
     - Allow a moment of reflection and prayer
     - Good night! 🌛
+  - Check your plans of today
+  - See the history of routines
+  - Get motivation by watching funny giphys
 
 ## Coming up soon
 
