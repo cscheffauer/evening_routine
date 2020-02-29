@@ -1,0 +1,16 @@
+.TechnologyInfoButtonContainer {
+    position: absolute;
+    right: 90px;
+    bottom: 20px;
+}
+
+.TechnologyInfoButton {
+    height: 30px;
+}
+
+.TechnologyInfoButton:hover {
+    height: 34px;
+    margin-bottom: -2px;
+    margin-right: -2px;
+    cursor: pointer;
+}

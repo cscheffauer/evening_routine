@@ -1,0 +1,16 @@
+.ImprintButtonContainer {
+    position: absolute;
+    right: 25px;
+    bottom: 20px;
+}
+
+.ImprintButton {
+    height: 30px;
+}
+
+.ImprintButton:hover {
+    height: 34px;
+    margin-bottom: -2px;
+    margin-right: -2px;
+    cursor: pointer;
+}

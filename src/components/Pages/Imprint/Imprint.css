@@ -1,0 +1,64 @@
+.Imprint {
+    background-color: #334053;
+    color: white;
+    display: block;
+    position: relative;
+    left: 15%;
+    width: 70%;
+    height: 70vh;
+}
+
+.Imprint .scrollContainer {
+    height: 100% !important;
+}
+
+
+.Imprint ol { 
+    counter-reset: item;
+    text-align: left;
+    padding-inline-start: 20px !important;
+}
+.Imprint li{ 
+    display: block;
+}
+.Imprint li:before { 
+    content: counters(item, ".") " "; 
+    counter-increment: item 
+}
+
+.Imprint .topli {
+    font-size: 25px;
+}
+
+.topli li{
+    font-size: 20px;
+}
+
+.Imprint a {
+    text-decoration: none;
+    color: rgb(98,255,254);
+    font-weight: bold;
+}
+
+
+.Imprint a:hover {
+    cursor: pointer;
+    color: rgb(98,255,254);
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+
+@media only screen and (max-width: 600px)  {
+    .Imprint {
+        background-color: #334053;
+        color: white;
+        display: block;
+        position: relative;
+        margin-left: 0;
+        left: 1%;
+        width: 98%;
+        height: 70vh;
+        margin-top: 0px;
+    }
+}
