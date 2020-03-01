@@ -16,7 +16,24 @@ const getGoalCategoryImage = (category) => {
     switch (category) {
         case GOAL_CATEGORIES.GOAL_CAT_CAREER:
             return "/images/goals/categories/career.png"
-
+        case GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL:
+            return "/images/goals/categories/educational.png"
+        case GOAL_CATEGORIES.GOAL_CAT_EXTERNAL:
+            return "/images/goals/categories/external.png"
+        case GOAL_CATEGORIES.GOAL_CAT_EXPERIMENTAL:
+            return "/images/goals/categories/experimental.png"
+        case GOAL_CATEGORIES.GOAL_CAT_FINANCIAL:
+            return "/images/goals/categories/financial.png"
+        case GOAL_CATEGORIES.GOAL_CAT_HEALTH:
+            return "/images/goals/categories/health.png"
+        case GOAL_CATEGORIES.GOAL_CAT_PERSONAL:
+            return "/images/goals/categories/personal.png"
+        case GOAL_CATEGORIES.GOAL_CAT_PSYCHOLOGICAL:
+            return "/images/goals/categories/psychological.png"
+        case GOAL_CATEGORIES.GOAL_CAT_RELATIONSHIP:
+            return "/images/goals/categories/relationship.png"
+        case GOAL_CATEGORIES.GOAL_CAT_SPIRITUAL:
+            return "/images/goals/categories/spiritual.png"
         default:
             break;
     }

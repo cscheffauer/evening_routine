@@ -25,5 +25,5 @@ export const GOAL_CATEGORIES = {
     GOAL_CAT_SPIRITUAL: 'Spiritual',
     GOAL_CAT_PSYCHOLOGICAL: 'Psychological',
     GOAL_CAT_EXTERNAL: 'External',
-    GOAL_CAT_Experimental: 'Experimental',
+    GOAL_CAT_EXPERIMENTAL: 'Experimental',
 }
