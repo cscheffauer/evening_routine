@@ -95,9 +95,11 @@ class MainPage extends Component {   //class App will use the component lib / Co
         const { route, onRouteChange, onDarkModeChange, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
         let page = this.getRouteComponent(onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal);
 
+        const goalsSet = (goals.length > 0 && route !== INITIAL_ROUTE) ? true : false;
+
         return (
             <Fragment>
-                {<Header onRouteChange={onRouteChange} onDarkModeChange={onDarkModeChange} darkMode={darkMode} route={route} />}
+                {<Header onRouteChange={onRouteChange} onDarkModeChange={onDarkModeChange} darkMode={darkMode} route={route} goalsSet={goalsSet} />}
                 <Wrapper>
                     {page}
                 </Wrapper>
