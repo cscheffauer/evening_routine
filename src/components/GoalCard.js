@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Box from '@material-ui/core/Box';
 import CardActions from '@material-ui/core/CardActions';
 
@@ -40,7 +40,7 @@ const getGoalCategoryImage = (category) => {
 }
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = (darkMode) => makeStyles(theme => ({
     root: {
         height: '100%',
         width: 250,
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     },
     media: {
         height: 200,
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: darkMode ? theme.palette.secondary.main : theme.palette.primary.main,
         marginTop: 40,
     },
     cardActionArea: {
@@ -67,7 +67,8 @@ const useStyles = makeStyles(theme => ({
     },
     deleteButton: {
         float: 'right',
-        padding: '8px 5px'
+        padding: '8px 5px',
+        minWidth: 45,
     },
     cardContent: {
         height: 'inherit'
@@ -76,8 +77,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const GoalCard = (props) => {
-    const classes = useStyles();
-    const { goal } = props;
+    const { goal, darkMode } = props;
+    const classes = useStyles(darkMode)();
     return (
         <Card className={classes.root}>
             <CardActionArea className={classes.cardActionArea}>
@@ -96,8 +97,8 @@ const GoalCard = (props) => {
                     </Typography>
                 </CardContent>
                 <Box className={classes.boxDeleteButton}>
-                    <Button className={classes.deleteButton} size="small" color="primary">
-                        <DeleteIcon />
+                    <Button className={classes.deleteButton} size="small" color={darkMode ? "secondary" : "primary"}>
+                        <HighlightOffIcon />
                     </Button>
                 </Box>
             </CardActionArea>

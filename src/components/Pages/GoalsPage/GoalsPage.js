@@ -20,8 +20,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SettingsPage = (props) => {
-    const { } = props;
+const GoalsPage = (props) => {
+    const { darkMode } = props;
     const classes = useStyles();
 
     const goals = [{
@@ -57,7 +57,7 @@ const SettingsPage = (props) => {
                     <Grid container justify="center" spacing={3}>
                         {goals.map((goal, index) => (
                             <Grid key={index} item>
-                                <GoalCard goal={goal} />
+                                <GoalCard goal={goal} darkMode={darkMode} />
                             </Grid>
                         ))}
                     </Grid>
@@ -66,4 +66,4 @@ const SettingsPage = (props) => {
         </Container>);
 }
 
-export default SettingsPage;
+export default GoalsPage;
