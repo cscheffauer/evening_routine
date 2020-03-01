@@ -29,17 +29,18 @@ const styles = theme => ({
     },
 });
 
+const initialNewGoal = {
+    title: '',
+    description: '',
+    category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL,
+}
 
 
 class AddGoal extends Component {
     constructor(props) {
         super();
         this.state = {
-            newGoal: {
-                title: '',
-                description: '',
-                category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL,
-            },
+            newGoal: initialNewGoal,
             open: false,
         }
         this.handleChangeCategory = this.handleChangeCategory.bind(this);
@@ -67,12 +68,14 @@ class AddGoal extends Component {
     }
     handleAdd(event, onAddGoal) {
         event.preventDefault();
-        onAddGoal(this.state.newGoal);
+        let newGoal = Object.assign({}, this.state.newGoal);    //copy the new goal to a completely fresh new object - to break any bindings
+        onAddGoal(newGoal);
 
         this.handleClose();
     };
 
     handleClickOpen() {
+        this.setState({ newGoal: Object.assign({}, initialNewGoal) });      //initialize a new goal (completely fresh new object) - cause react uses & reference
         this.setState({ open: true });
     };
 
