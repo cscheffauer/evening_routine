@@ -51,7 +51,7 @@ const GoalsPage = (props) => {
                     </Grid>
                     :
                     <Typography className={classes.centerTypo} paragraph>
-                        No goals defined.
+                        No goals defined. Define at least one goal to start your evening routine.
                     </Typography>
                 }
             </Box>

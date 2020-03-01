@@ -78,27 +78,29 @@ export const changeDarkMode = (state = initialDarkMode, action = {}) => {
 
 
 const initialGoals = {
-    goals: [{
-        title: 'Programming more',
-        description: 'I would like to program more, spend my time on coding and create projects.',
-        category: 'Personal Development',
-    }, {
-        title: 'Get my dream job as a coder',
-        description: 'I would like to get that job at Google.',
-        category: 'Career',
-    }, {
-        title: 'More active',
-        description: 'I would like to be more active, do more sports.',
-        category: 'Physical & Health',
-    }, {
-        title: 'Get more money',
-        description: 'I would like to get more money.',
-        category: 'Financial',
-    }, {
-        title: 'More resistant to stress & anxiety',
-        description: 'I would like to get more resistant to stress & anxiety',
-        category: 'Psychological',
-    }]       //initial object in the redux store
+    goals: [
+        /*{
+            title: 'Programming more',
+            description: 'I would like to program more, spend my time on coding and create projects.',
+            category: 'Personal Development',
+        }, {
+            title: 'Get my dream job as a coder',
+            description: 'I would like to get that job at Google.',
+            category: 'Career',
+        }, {
+            title: 'More active',
+            description: 'I would like to be more active, do more sports.',
+            category: 'Physical & Health',
+        }, {
+            title: 'Get more money',
+            description: 'I would like to get more money.',
+            category: 'Financial',
+        }, {
+            title: 'More resistant to stress & anxiety',
+            description: 'I would like to get more resistant to stress & anxiety',
+            category: 'Psychological',
+        }*/
+    ]       //initial object in the redux store
 }
 
 //changeGoals function -> use default params (initialState, empty action object)

@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import TodayIcon from '@material-ui/icons/Today';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import SettingsIcon from '@material-ui/icons/Settings';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -42,7 +42,7 @@ const routes = [{
 }, {
     route: GOALS_ROUTE,
     text: 'Goals',
-    icon: <SettingsIcon />
+    icon: <AssessmentIcon />
 }];
 
 const useStyles = makeStyles(theme => ({
