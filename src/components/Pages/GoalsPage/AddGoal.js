@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
+
 import {
     GOAL_CATEGORIES
 } from '../../../constants'       //get constants form constants file
@@ -35,61 +36,71 @@ class AddGoal extends Component {
         super();
         this.state = {
             newGoal: {
-                category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL,
                 title: '',
                 description: '',
+                category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL,
             },
             open: false,
         }
+        this.handleChangeCategory = this.handleChangeCategory.bind(this);
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleChangeDescription = this.handleChangeDescription.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
+    handleChangeCategory(event) {
+        let newState = Object.assign({}, this.state);
+        newState.newGoal.category = event.target.value;
+        this.setState(newState);
+    }
+    handleChangeTitle(event) {
+        let newState = Object.assign({}, this.state);
+        newState.newGoal.title = event.target.value;
+        this.setState(newState);
+    }
+    handleChangeDescription(event) {
+        let newState = Object.assign({}, this.state);
+        newState.newGoal.description = event.target.value;
+        this.setState(newState);
+    }
+    handleAdd(event, onAddGoal) {
+        event.preventDefault();
+        onAddGoal(this.state.newGoal);
+
+        this.handleClose();
+    };
+
+    handleClickOpen() {
+        this.setState({ open: true });
+    };
+
+    handleClose() {
+        this.setState({ open: false });
+    };
+
     render() {
-        const handleChangeCategory = (event) => {
-            let newState = Object.assign({}, this.state);
-            newState.newGoal.category = event.target.value;
-            this.setState(newState);
-        }
-        const handleChangeTitle = (event) => {
-            let newState = Object.assign({}, this.state);
-            newState.newGoal.title = event.target.value;
-            this.setState(newState);
-        }
-        const handleChangeDescription = (event) => {
-            let newState = Object.assign({}, this.state);
-            newState.newGoal.description = event.target.value;
-            this.setState(newState);
-        }
-
-        const handleClickOpen = () => {
-            this.setState({ open: true });
-        };
-
-        const handleClose = () => {
-            this.setState({ open: false });
-        };
-        const handleAdd = () => {
-            onAddGoal(this.state.newGoal);
-            
-            handleClose();
-        };
         const { darkMode, classes, onAddGoal } = this.props;
 
         return (
             <Fragment>
-                <Fab className={classes.buttonAdd} onClick={handleClickOpen} color={darkMode ? "secondary" : "primary"} aria-label="add">
+                <Fab className={classes.buttonAdd} onClick={this.handleClickOpen} color={darkMode ? "secondary" : "primary"} aria-label="add">
                     <AddIcon />
                 </Fab>
-                <Dialog open={this.state.open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+
                     <DialogTitle id="form-dialog-title">Add a new goal</DialogTitle>
                     <DialogContent>
+
                         <TextField
                             select
                             id="category"
                             label="Category"
                             fullWidth
+                            onChange={this.handleChangeCategory}
                             margin="normal"
                             value={this.state.newGoal.category}
-                            onChange={(e) => handleChangeCategory(e)}
                             helperText="Please select the goal category"
                         >
                             {categories.map(category => (
@@ -105,8 +116,8 @@ class AddGoal extends Component {
                             id="title"
                             label="Title"
                             type="text"
-                            onChange={(e) => handleChangeTitle(e)}
                             fullWidth
+                            onChange={this.handleChangeTitle}
                         />
                         <TextField
                             required
@@ -117,15 +128,15 @@ class AddGoal extends Component {
                             placeholder="Type in a proper description of your goal."
                             multiline
                             type="text"
-                            onChange={(e) => handleChangeDescription(e)}
                             fullWidth
+                            onChange={this.handleChangeDescription}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleAdd} color="primary">
+                        <Button onClick={(e) => this.handleAdd(e, onAddGoal)} color="primary">
                             Add
                         </Button>
                     </DialogActions>

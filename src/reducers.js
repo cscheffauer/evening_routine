@@ -106,7 +106,8 @@ const initialGoals = {
 export const changeGoals = (state = initialGoals, action = {}) => {
     switch (action.type) {
         case ADD_GOAL:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
-            return Object.assign({}, state, { goals: [...state.goals, action.payload] })
+            const newGoals = [...state.goals, action.payload];
+            return Object.assign({}, state, { goals: newGoals })
         case EDIT_GOAL:       //if a EDIT_GOAL action comes in, the edited goals will be the new goal
             return Object.assign({}, state,
                 {
