@@ -57,7 +57,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         };
     }
 
-    getRouteComponent = (onRouteChange, route, darkMode) => {
+    getRouteComponent = (onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal) => {
 
         if (route === INITIAL_ROUTE) {
             return (
@@ -86,14 +86,14 @@ class MainPage extends Component {   //class App will use the component lib / Co
         } else if (route === GOALS_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageGoals darkMode={darkMode} />
+                    <AsyncPageGoals darkMode={darkMode} goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} />
                 </Suspense>
             )
         }
     }
     render() {
-        const { route, onRouteChange, onDarkModeChange, darkMode } = this.props;
-        let page = this.getRouteComponent(onRouteChange, route, darkMode);
+        const { route, onRouteChange, onDarkModeChange, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
+        let page = this.getRouteComponent(onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal);
 
         return (
             <Fragment>

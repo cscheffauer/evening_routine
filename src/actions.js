@@ -1,6 +1,9 @@
 import {
     CHANGE_DARK_MODE,
-    CHANGE_ROUTE
+    CHANGE_ROUTE,
+    ADD_GOAL,
+    EDIT_GOAL,
+    REMOVE_GOAL,
 } from './constants'       //get constants form constants file
 
 
@@ -21,6 +24,25 @@ export const setDarkMode = (boolean) => ({
     type: CHANGE_DARK_MODE,                  //constants are usually capitalized - we use a variable here to avoid misspelling 
     payload: boolean
 })
+
+export const addGoal = (goal) => ({
+    type: ADD_GOAL,                  //constants are usually capitalized - we use a variable here to avoid misspelling 
+    payload: goal
+})
+
+export const editGoal = (goal, index) => ({
+    type: EDIT_GOAL,                  //constants are usually capitalized - we use a variable here to avoid misspelling 
+    payload: { goal: goal, index: index }
+})
+
+export const removeGoal = (index) => ({
+    type: REMOVE_GOAL,                  //constants are usually capitalized - we use a variable here to avoid misspelling 
+    payload: index
+})
+
+
+
+
 
 //actions can just be objects {}
 /*

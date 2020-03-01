@@ -1,7 +1,10 @@
 import {
     INITIAL_ROUTE,
     CHANGE_DARK_MODE,
-    CHANGE_ROUTE
+    CHANGE_ROUTE,
+    ADD_GOAL,
+    EDIT_GOAL,
+    REMOVE_GOAL,
 } from './constants'       //get constants form constants file
 
 //import { getSunrise, getSunset } from 'sunrise-sunset-js';    //imports for sunrise, sunset calculcation
@@ -70,6 +73,62 @@ export const changeDarkMode = (state = initialDarkMode, action = {}) => {
             return state    //if a other action comes in, return the state as it was passed over and do not change anything
     }
 }
+
+
+
+
+const initialGoals = {
+    goals: [{
+        title: 'Programming more',
+        description: 'I would like to program more, spend my time on coding and create projects.',
+        category: 'Personal Development',
+    }, {
+        title: 'Get my dream job as a coder',
+        description: 'I would like to get that job at Google.',
+        category: 'Career',
+    }, {
+        title: 'More active',
+        description: 'I would like to be more active, do more sports.',
+        category: 'Physical & Health',
+    }, {
+        title: 'Get more money',
+        description: 'I would like to get more money.',
+        category: 'Financial',
+    }, {
+        title: 'More resistant to stress & anxiety',
+        description: 'I would like to get more resistant to stress & anxiety',
+        category: 'Psychological',
+    }]       //initial object in the redux store
+}
+
+//changeGoals function -> use default params (initialState, empty action object)
+//reducers get a input of a state and action -> if this one get something we care about (like changeGoals), we will do something
+export const changeGoals = (state = initialGoals, action = {}) => {
+    switch (action.type) {
+        case ADD_GOAL:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
+            return Object.assign({}, state, { goals: [...state.goals, action.payload] })
+        case EDIT_GOAL:       //if a EDIT_GOAL action comes in, the edited goals will be the new goal
+            return Object.assign({}, state,
+                {
+                    goals: state.goals.map((goal, index) => index === action.payload.index ?
+                        // transform the one with a matching id
+                        action.payload.goal :
+                        // otherwise return original todo
+                        goal
+                    )
+                }
+            )
+        case REMOVE_GOAL:       //if a REMOVE_GOAL action comes in, the goal will be removed
+            return Object.assign({}, state, { goals: state.goals.filter((goal, index) => index !== action.payload) })
+        //1st param= new object
+        //2nd param= state we receiving
+        //3rd param=is what we want to change in the state
+        //so what we return is a new object with everything in the state + new darkMode -> 2nd principle: State is read only
+        default:
+            return state    //if a other action comes in, return the state as it was passed over and do not change anything
+    }
+}
+
 
 /**
  * REQUESTING PEOPLE REDUCER

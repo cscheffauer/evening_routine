@@ -10,7 +10,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Box from '@material-ui/core/Box';
 import CardActions from '@material-ui/core/CardActions';
 
-import { GOAL_CATEGORIES } from '../constants';
+import { GOAL_CATEGORIES } from '../../../constants';
 
 const getGoalCategoryImage = (category) => {
     switch (category) {
@@ -27,7 +27,7 @@ const getGoalCategoryImage = (category) => {
         case GOAL_CATEGORIES.GOAL_CAT_HEALTH:
             return "/images/goals/categories/health.png"
         case GOAL_CATEGORIES.GOAL_CAT_PERSONAL:
-            return "/images/goals/categories/personal.png"
+            return "/images/goals/categories/personal_development.png"
         case GOAL_CATEGORIES.GOAL_CAT_PSYCHOLOGICAL:
             return "/images/goals/categories/psychological.png"
         case GOAL_CATEGORIES.GOAL_CAT_RELATIONSHIP:
@@ -77,7 +77,7 @@ const useStyles = (darkMode) => makeStyles(theme => ({
 }));
 
 const GoalCard = (props) => {
-    const { goal, darkMode } = props;
+    const { goal, darkMode, index, onRemoveGoal } = props;
     const classes = useStyles(darkMode)();
     return (
         <Card className={classes.root}>
@@ -97,7 +97,7 @@ const GoalCard = (props) => {
                     </Typography>
                 </CardContent>
                 <Box className={classes.boxDeleteButton}>
-                    <Button className={classes.deleteButton} size="small" color={darkMode ? "secondary" : "primary"}>
+                    <Button className={classes.deleteButton} size="small" color={darkMode ? "secondary" : "primary"} onClick={() => onRemoveGoal(index)}>
                         <HighlightOffIcon />
                     </Button>
                 </Box>

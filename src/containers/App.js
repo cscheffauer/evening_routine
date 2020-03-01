@@ -2,12 +2,13 @@ import React, { Component } from 'react';   //destructuring (instead of React.Co
 import { connect } from 'react-redux';
 import MainPage from './MainPage/MainPage'
 
-import { setRoute, setDarkMode } from '../actions'
+import { setRoute, setDarkMode, addGoal, editGoal, removeGoal } from '../actions'
 
 const mapStateToProps = state => {
     return {
         route: state.changeRoute.route,
-        darkMode: state.changeDarkMode.darkMode                    // -''-
+        darkMode: state.changeDarkMode.darkMode,
+        goals: state.changeGoals.goals                    // -''-
     }
 }
 
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
         //it will hand over the event.target.value (which is the stuff typed in the search box)
         onRouteChange: (route) => dispatch(setRoute(route)),
         onDarkModeChange: (darkMode) => dispatch(setDarkMode(darkMode)),
+        onAddGoal: (goal) => dispatch(addGoal(goal)),
+        onEditGoal: (goal, index) => dispatch(editGoal(goal, index)),
+        onRemoveGoal: (index) => dispatch(removeGoal(index)),
     }
 }
 

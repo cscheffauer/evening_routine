@@ -5,6 +5,11 @@
 export const CHANGE_DARK_MODE = 'CHANGE_DARK_MODE';
 export const CHANGE_ROUTE = 'CHANGE_ROUTE';
 
+export const ADD_GOAL = 'ADD_GOAL';
+export const EDIT_GOAL = 'EDIT_GOAL';
+export const REMOVE_GOAL = 'REMOVE_GOAL';
+
+
 /*
 * REACT
 */
