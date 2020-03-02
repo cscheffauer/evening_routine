@@ -77,11 +77,11 @@ const useStyles = (darkMode) => makeStyles(theme => ({
 }));
 
 const GoalCard = (props) => {
-    const { goal, darkMode, index, onRemoveGoal } = props;
+    const { goal, darkMode, index, handleRemove, openEditGoalDialog } = props;
     const classes = useStyles(darkMode)();
     return (
         <Card className={classes.root}>
-            <CardActionArea className={classes.cardActionArea}>
+            <CardActionArea className={classes.cardActionArea} onClick={() => openEditGoalDialog()}>
 
                 <CardMedia
                     className={classes.media}
@@ -97,7 +97,7 @@ const GoalCard = (props) => {
                     </Typography>
                 </CardContent>
                 <Box className={classes.boxDeleteButton}>
-                    <Button className={classes.deleteButton} size="small" color={darkMode ? "secondary" : "primary"} onClick={() => onRemoveGoal(index)}>
+                    <Button className={classes.deleteButton} size="small" color={darkMode ? "secondary" : "primary"} onClick={() => handleRemove(index)}>
                         <HighlightOffIcon />
                     </Button>
                 </Box>

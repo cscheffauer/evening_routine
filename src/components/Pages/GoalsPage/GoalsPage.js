@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import GoalCard from './GoalCard';
 
 import AddGoal from './AddGoal';
+import EditGoal from './EditGoal';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     root: {
         flexGrow: 1,
     },
@@ -24,42 +25,71 @@ const useStyles = makeStyles(theme => ({
     centerTypo: {
         textAlign: 'center',
     }
-}));
+});
 
 
-const GoalsPage = (props) => {
-    const { darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = props;
-    console.log(goals);
-    const classes = useStyles();
-    return (
-        <Container>
-            <Box>
-                <Typography className={classes.centerTypo} variant="h4">
-                    Your goals
-                    </Typography>
-            </Box>
-            <Box className={classes.boxGoals} >
-                {goals.length > 0 ?
-                    <Grid className={classes.root} item xs={12}>
-                        <Grid container justify="center" spacing={3}>
-                            {goals.map((goal, index) => (
-                                <Grid key={index} item>
-                                    <GoalCard index={index} goal={goal} darkMode={darkMode} onRemoveGoal={onRemoveGoal} />
-                                </Grid>
-                            ))}
+class GoalsPage extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            indexOfGoal: 0,
+            open: false,
+        }
+    }
+
+    render() {
+        const { darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, classes } = this.props;
+
+        const openEditGoalDialog = () => {
+
+            this.setState({ open: true });
+        }
+        const handleEdit = (event, goalToBeEdited, index) => {
+            event.preventDefault();
+            //let goalToBeEdited = Object.assign({}, goalToBeEdited);    //copy the new goal to a completely fresh new object - to break any bindings
+            console.log(goalToBeEdited);
+            onEditGoal(goalToBeEdited, index);
+
+            handleClose();
+        };
+        const handleRemove = (index) => {
+            console.log(this.state);
+            onRemoveGoal(index);
+        }
+
+        const handleClose = () => {
+            this.setState({ open: false });
+        };
+        return (
+            <Container>
+                <Box>
+                    <Typography className={classes.centerTypo} variant="h4">
+                        Your goals
+                        </Typography>
+                </Box>
+                <Box className={classes.boxGoals} >
+                    {goals.length > 0 ?
+                        <Grid className={classes.root} item xs={12}>
+                            <Grid container justify="center" spacing={3}>
+                                {goals.map((goal, index) => (
+                                    <Grid key={index} item>
+                                        <GoalCard index={index} goal={goal} darkMode={darkMode} handleRemove={handleRemove} openEditGoalDialog={openEditGoalDialog} />
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    :
-                    <Typography className={classes.centerTypo} paragraph>
-                        No goals defined. Define at least one goal to start your evening routine.
-                    </Typography>
-                }
-            </Box>
-            <AddGoal onAddGoal={onAddGoal} darkMode={darkMode} />
-        </Container>
-
-    );
-
+                        :
+                        <Typography className={classes.centerTypo} paragraph>
+                            No goals defined. Define at least one goal to start your evening routine.
+                        </Typography>
+                    }
+                </Box>
+                <AddGoal onAddGoal={onAddGoal} darkMode={darkMode} />
+                <EditGoal handleEdit={handleEdit} handleClose={handleClose} goal={this.state.goalToBeEdited} index={this.state.indexOfGoal} open={this.state.open} />
+            </Container>
+        );
+    };
 }
 
-export default GoalsPage;
+
+export default withStyles(styles)(GoalsPage);
