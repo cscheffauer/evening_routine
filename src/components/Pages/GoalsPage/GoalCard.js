@@ -81,14 +81,15 @@ const GoalCard = (props) => {
     const classes = useStyles(darkMode)();
     return (
         <Card className={classes.root}>
-            <CardActionArea className={classes.cardActionArea} onClick={() => openEditGoalDialog()}>
+            <CardActionArea className={classes.cardActionArea} >
 
                 <CardMedia
+                    onClick={() => openEditGoalDialog(goal, index)}
                     className={classes.media}
                     image={getGoalCategoryImage(goal.category)}
                     title={goal.category}
                 />
-                <CardContent className={classes.cardContent}>
+                <CardContent className={classes.cardContent} onClick={() => openEditGoalDialog(goal, index)}>
                     <Typography gutterBottom variant="h5" component="h2">
                         {goal.title}
                     </Typography>

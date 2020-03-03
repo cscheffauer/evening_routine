@@ -52,18 +52,13 @@ class EditGoalDialog extends Component {
         this.setState(newState);
     }
 
-
-
-    /*
-        componentDidUpdate() {
-            if (this.props.open) {
-                this.setState({ goalToBeEdited: this.props.goal });
-            }
+    comp() {
+        if (this.props.open) {
+            this.setState({ goalToBeEdited: this.props.initialGoal });
         }
-    */
+    }
     render() {
         const { handleEdit, handleClose, initialGoal, index, open } = this.props;
-        console.log(initialGoal);
         return (
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 
