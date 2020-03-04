@@ -1,35 +1,88 @@
 import React, { Fragment } from 'react'
-import Typography from '@material-ui/core/Typography';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Backdrop from '@material-ui/core/Backdrop';
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import CancelIcon from '@material-ui/icons/Cancel';
 
-import './TodayPage.css';
+const useStyles = makeStyles(theme => ({
+    //toolbar: theme.mixins.toolbar,
+    container: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        flexDirection: 'column',
+        [theme.breakpoints.down('md')]: {
+            height: '80vh',
+        },
+        [theme.breakpoints.up('md')]: {
+            height: '85vh',
+        }
+    },
+    button: {},
+    boxButton: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    backdropRoutine: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+    containerRoutine: {
+        maxWidth: 1600
+    },
+    paperRoutine: {
+        height: '90vh',
+    },
+    buttonCloseRoutine: {
+        float: 'right',
+        marginTop: 5,
+        marginRight: 5,
+    }
+}));
 
-const TodayPage = () => {
+
+const TodayPage = (props) => {
+    const { goals, darkMode } = props;
+    const classes = useStyles();
+    const [openBackdrop, setOpenBackdrop] = React.useState(false);
+    const handleCloseBackDrop = () => {
+        setOpenBackdrop(false);
+    };
+    const handleOpenBackDrop = () => {
+        setOpenBackdrop(true);
+    };
     return (
-        <Fragment>
-            <Typography paragraph>
-                TODAY Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                donec massa sapien faucibus et molestie ac.
-            </Typography>
-            <Typography paragraph>
-                Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-            </Typography>
-        </Fragment>);
+        <Container className={classes.container}>
+            <Backdrop className={classes.backdropRoutine} open={openBackdrop}>
+                <Container className={classes.containerRoutine}>
+                    <Paper className={classes.paperRoutine} elevation={3}>
+                        <Button
+                            variant="contained"
+                            color={darkMode ? "secondary" : "primary"}
+                            size="medium"
+                            className={classes.buttonCloseRoutine}
+                            onClick={handleCloseBackDrop}
+                            startIcon={<CancelIcon />}
+                        >Cancel</Button>
+                    </Paper>
+                </Container>
+            </Backdrop>
+            <Box className={classes.boxButton}>
+                <Button
+                    variant="contained"
+                    color={darkMode ? "secondary" : "primary"}
+                    size="large"
+                    className={classes.button}
+                    onClick={handleOpenBackDrop}
+                    startIcon={<PlayCircleOutlineIcon />}
+                >
+                    Start Routine
+                </Button>
+            </Box>
+        </Container>);
 }
 
 export default TodayPage;

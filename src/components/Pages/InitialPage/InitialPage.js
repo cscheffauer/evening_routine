@@ -3,8 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 
 import './InitialPage.css';
@@ -41,17 +39,6 @@ const InitialPage = (props) => {
                 <Typography variant="h4">
                     To start your evening routine, please fulfill your <Link className={classes.link} onClick={() => onRouteChange(GOALS_ROUTE)}>goals</Link> first.
                 </Typography>
-            </Box>
-            <Box>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    className={classes.button}
-                    startIcon={<PlayCircleOutlineIcon />}
-                >
-                    Start
-                </Button>
             </Box>
         </Container>
     );
