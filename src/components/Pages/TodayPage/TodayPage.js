@@ -54,11 +54,26 @@ const styles = (theme => ({
     },
     containerStepper: {
         flexGrow: 1,
-        paddingTop: 50,
+        paddingTop: 20,
         paddingBottom: 24,
         display: 'flex',
         flexFlow: 'column wrap',
         justifyContent: 'space-between'
+    },
+    headerStepper: {
+
+    },
+    typoStepper: {
+        marginTop: 24,
+        marginBottom: 24,
+        fontSize: 28,
+    },
+    boxStepperContent: {
+        flexGrow: 1
+    },
+    progress: {
+        height: 10,
+        borderRadius: 20,
     },
     buttonSaveCloseRoutine: {
         float: 'right',
@@ -106,7 +121,7 @@ class TodayPage extends Component {
         this.state = {
             activeStep: 0,
             openBackdrop: false,
-
+            randomGiphyURL: ''
         }
     }
     render() {
@@ -116,8 +131,16 @@ class TodayPage extends Component {
         const handleCloseBackDrop = () => {
             this.setState({ openBackdrop: false });
         };
+
+        const fetchRandomGiphy = (tag) => {
+            fetch('https://api.giphy.com/v1/gifs/random?api_key=mcJc4PG0eNZeswDk8cJEpWbDY3e8FBOI&tag=' + tag + '&rating=PG')
+                .then(response => response.json())
+                .then(response => this.setState({ randomGiphyURL: response.data.images.original.mp4 }));
+        }
+
         const handleOpenBackDrop = () => {
             this.setState({ activeStep: 0, openBackdrop: true });
+            fetchRandomGiphy('cat');
         };
 
         const handleNext = () => {
@@ -140,23 +163,25 @@ class TodayPage extends Component {
                         <Paper className={classes.paperRoutine} elevation={3}>
                             <Container className={classes.containerStepper}>
                                 <Paper square elevation={0} className={classes.headerStepper}>
-                                    <Typography>{tutorialSteps[this.state.activeStep].label}</Typography>
+                                    <Typography variant="h4">{tutorialSteps[this.state.activeStep].label}</Typography>
                                 </Paper>
                                 <Typography className={classes.typoStepper}>{tutorialSteps[this.state.activeStep].description}</Typography>
+                                <Box className={classes.boxStepperContent}>
+                                </Box>
                                 <MobileStepper
                                     steps={maxSteps}
                                     position="static"
                                     variant="progress"
                                     activeStep={this.state.activeStep}
-                                    className={classes.stepper}
+                                    classes={{ progress: classes.progress }}    //to get the inner "progress" class of the MobileStepper 
                                     nextButton={
-                                        <Button size="small" onClick={handleNext} disabled={this.state.activeStep === maxSteps - 1}>
+                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleNext} disabled={this.state.activeStep === maxSteps - 1}>
                                             Next
                                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                                         </Button>
                                     }
                                     backButton={
-                                        <Button size="small" onClick={handleBack} disabled={this.state.activeStep === 0}>
+                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleBack} disabled={this.state.activeStep === 0}>
                                             {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                                             Back
                                     </Button>
