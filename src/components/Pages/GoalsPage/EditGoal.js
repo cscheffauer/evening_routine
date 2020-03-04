@@ -50,7 +50,7 @@ class EditGoalDialog extends Component {
         }
     }
     render() {
-        const { handleEdit, handleClose, index, open } = this.props;
+        const { index, handleEdit, handleClose, open } = this.props;
         return (
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 

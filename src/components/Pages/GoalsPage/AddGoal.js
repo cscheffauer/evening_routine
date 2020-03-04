@@ -4,12 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+
 import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 
 import {
@@ -17,38 +15,18 @@ import {
 } from '../../../constants'       //get constants form constants file
 
 
-
 const categories = Object.values(GOAL_CATEGORIES);
-
-const styles = theme => ({
-    buttonAdd: {
-        display: 'flex',
-        margin: 'auto',
-        marginTop: 30,
-        marginBottom: 30
-    },
-});
-
-const initialNewGoal = {
-    title: '',
-    description: '',
-    category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL,
-}
 
 
 class AddGoal extends Component {
     constructor(props) {
         super();
         this.state = {
-            newGoal: initialNewGoal,
-            open: false,
+            newGoal: {},
         }
         this.handleChangeCategory = this.handleChangeCategory.bind(this);
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleClickOpen = this.handleClickOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
     }
 
     handleChangeCategory(event) {
@@ -66,36 +44,21 @@ class AddGoal extends Component {
         newState.newGoal.description = event.target.value;
         this.setState(newState);
     }
-    handleAdd(event, onAddGoal) {
-        event.preventDefault();
-        let newGoal = Object.assign({}, this.state.newGoal);    //copy the new goal to a completely fresh new object - to break any bindings
-        onAddGoal(newGoal);
 
-        this.handleClose();
-    };
-
-    handleClickOpen() {
-        this.setState({ newGoal: Object.assign({}, initialNewGoal) });      //initialize a new goal (completely fresh new object) - cause react uses & reference
-        this.setState({ open: true });
-    };
-
-    handleClose() {
-        this.setState({ open: false });
-    };
+    componentDidUpdate() {
+        this.state.newGoal !== this.props.initialGoal && this.setState({ newGoal: this.props.initialGoal })
+    }
 
     render() {
-        const { darkMode, classes, onAddGoal } = this.props;
+        const { handleAdd, handleClose, open } = this.props;
 
         return (
             <Fragment>
-                <Fab className={classes.buttonAdd} onClick={this.handleClickOpen} color={darkMode ? "secondary" : "primary"} aria-label="add">
-                    <AddIcon />
-                </Fab>
-                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 
                     <DialogTitle id="form-dialog-title">Add a new goal</DialogTitle>
                     <DialogContent>
-
                         <TextField
                             select
                             id="category"
@@ -136,10 +99,10 @@ class AddGoal extends Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={(e) => this.handleAdd(e, onAddGoal)} color="primary">
+                        <Button onClick={(e) => handleAdd(e, this.state.newGoal)} color="primary">
                             Add
                         </Button>
                     </DialogActions>
@@ -149,4 +112,4 @@ class AddGoal extends Component {
     }
 }
 
-export default withStyles(styles)(AddGoal);
+export default (AddGoal);

@@ -86,7 +86,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         } else if (route === GOALS_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageGoals darkMode={darkMode} goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} />
+                    <AsyncPageGoals goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} darkMode={darkMode} />
                 </Suspense>
             )
         }

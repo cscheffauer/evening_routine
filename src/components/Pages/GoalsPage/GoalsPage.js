@@ -5,9 +5,16 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import GoalCard from './GoalCard';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import AddGoal from './AddGoal';
 import EditGoal from './EditGoal';
+
+import {
+    GOAL_CATEGORIES
+} from '../../../constants'       //get constants form constants file
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,17 +37,36 @@ const useStyles = makeStyles(theme => ({
 
 
 const GoalsPage = (props) => {
-    const { darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = props;
+    const { goals, onAddGoal, onEditGoal, onRemoveGoal, darkMode } = props;
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+
+    const initialNewGoal = {
+        title: '',
+        description: '',
+        category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL,
+    }
+
+    const [openAdd, setOpenAdd] = React.useState(false);
+    const [openEdit, setOpenEdit] = React.useState(false);
+    const [newGoal, setNewGoal] = React.useState({});
     const [goalToBeEdited, setGoalToBeEdited] = React.useState({});
     const [indexOfGoal, setIndexOfGoal] = React.useState(0);
+
+    const openAddGoalDialog = () => {
+        setNewGoal(Object.assign({}, initialNewGoal));
+        setOpenAdd(true);
+    };
 
     const openEditGoalDialog = (goal, index) => {
         setGoalToBeEdited(Object.assign({}, goal));
         setIndexOfGoal(index);
-        console.log(goal);
-        !(Object.entries(goal).length === 0 && goal.constructor === Object) && setOpen(true);
+        setOpenEdit(true);
+    }
+
+    const handleAdd = (event, goalToBeAdded) => {
+        event.preventDefault();
+        onAddGoal(Object.assign({}, goalToBeAdded));
+        handleClose();
     }
 
     const handleEdit = (event, goalToBeEdited, index) => {
@@ -54,7 +80,8 @@ const GoalsPage = (props) => {
     }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenAdd(false);
+        setOpenEdit(false);
     };
     return (
         <Container>
@@ -69,7 +96,7 @@ const GoalsPage = (props) => {
                         <Grid container justify="center" spacing={3}>
                             {goals.map((goal, index) => (
                                 <Grid key={index} item>
-                                    <GoalCard index={index} goal={goal} darkMode={darkMode} handleRemove={handleRemove} openEditGoalDialog={openEditGoalDialog} />
+                                    <GoalCard goal={goal} index={index} openEditGoalDialog={openEditGoalDialog} handleRemove={handleRemove} darkMode={darkMode} />
                                 </Grid>
                             ))}
                         </Grid>
@@ -80,8 +107,11 @@ const GoalsPage = (props) => {
                         </Typography>
                 }
             </Box>
-            <AddGoal onAddGoal={onAddGoal} darkMode={darkMode} />
-            <EditGoal handleEdit={handleEdit} handleClose={handleClose} initialGoal={goalToBeEdited} index={indexOfGoal} open={open} />
+            <Fab className={classes.buttonAdd} onClick={openAddGoalDialog} color={darkMode ? "secondary" : "primary"} aria-label="add">
+                <AddIcon />
+            </Fab>
+            <AddGoal initialGoal={newGoal} handleAdd={handleAdd} handleClose={handleClose} open={openAdd} darkMode={darkMode} />
+            <EditGoal initialGoal={goalToBeEdited} index={indexOfGoal} handleEdit={handleEdit} handleClose={handleClose} open={openEdit} />
         </Container>
     );
 };

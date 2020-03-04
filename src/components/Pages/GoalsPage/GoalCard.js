@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Box from '@material-ui/core/Box';
-import CardActions from '@material-ui/core/CardActions';
 
 import { GOAL_CATEGORIES } from '../../../constants';
 
@@ -77,12 +76,11 @@ const useStyles = (darkMode) => makeStyles(theme => ({
 }));
 
 const GoalCard = (props) => {
-    const { goal, darkMode, index, handleRemove, openEditGoalDialog } = props;
+    const { goal, index, openEditGoalDialog, handleRemove, darkMode } = props;
     const classes = useStyles(darkMode)();
     return (
         <Card className={classes.root}>
             <CardActionArea className={classes.cardActionArea} >
-
                 <CardMedia
                     onClick={() => openEditGoalDialog(goal, index)}
                     className={classes.media}
