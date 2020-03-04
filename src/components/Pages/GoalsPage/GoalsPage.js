@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import GoalCard from './GoalCard';

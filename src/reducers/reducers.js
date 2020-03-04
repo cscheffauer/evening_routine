@@ -5,7 +5,7 @@ import {
     ADD_GOAL,
     EDIT_GOAL,
     REMOVE_GOAL,
-} from './constants'       //get constants form constants file
+} from '../constants'       //get constants form constants file
 
 //import { getSunrise, getSunset } from 'sunrise-sunset-js';    //imports for sunrise, sunset calculcation
 

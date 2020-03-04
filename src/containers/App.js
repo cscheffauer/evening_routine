@@ -2,7 +2,7 @@ import React, { Component } from 'react';   //destructuring (instead of React.Co
 import { connect } from 'react-redux';
 import MainPage from './MainPage/MainPage'
 
-import { setRoute, setDarkMode, addGoal, editGoal, removeGoal } from '../actions'
+import { setRoute, setDarkMode, addGoal, editGoal, removeGoal } from '../actions/actions'
 
 const mapStateToProps = state => {
     return {

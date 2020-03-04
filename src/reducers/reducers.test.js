@@ -3,7 +3,7 @@ import {
     REQUEST_PEOPLE_PENDING,
     REQUEST_PEOPLE_SUCCESS,
     REQUEST_PEOPLE_FAILED
-} from './constants'       //get constants form constants file
+} from '../constants'       //get constants form constants file
 
 
 import * as reducers from './reducers';     //import all reducers in the reducers file

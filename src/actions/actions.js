@@ -4,7 +4,7 @@ import {
     ADD_GOAL,
     EDIT_GOAL,
     REMOVE_GOAL,
-} from './constants'       //get constants form constants file
+} from '../constants'       //get constants form constants file
 
 
 //import { getFirstPeople, getMorePeople, replaceSpeciesName } from './api/api';
