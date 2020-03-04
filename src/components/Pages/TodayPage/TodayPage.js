@@ -1,19 +1,17 @@
-import React, { Fragment } from 'react'
+import React, { Component, } from 'react'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Backdrop from '@material-ui/core/Backdrop';
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
+import { withStyles, withTheme } from '@material-ui/core/styles';
+import MobileStepper from '@material-ui/core/MobileStepper';
 import Typography from '@material-ui/core/Typography';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-const useStyles = makeStyles(theme => ({
+const styles = (theme => ({
     //toolbar: theme.mixins.toolbar,
     container: {
         display: 'flex',
@@ -46,146 +44,159 @@ const useStyles = makeStyles(theme => ({
         color: '#fff',
     },
     containerRoutine: {
-        maxWidth: 1600,
+        maxWidth: 1200,
     },
     paperRoutine: {
         height: '90vh',
+        display: 'flex',
+        flexFlow: 'column wrap',
+        justifyContent: 'space-between'
     },
     containerStepper: {
-        paddingTop: 50
+        flexGrow: 1,
+        paddingTop: 50,
+        paddingBottom: 24,
+        display: 'flex',
+        flexFlow: 'column wrap',
+        justifyContent: 'space-between'
     },
-    buttonCloseRoutine: {
+    buttonSaveCloseRoutine: {
         float: 'right',
-        marginTop: 5,
-        marginRight: 5,
+        marginLeft: 20
+    },
+    boxButtonSaveClose: {
+        paddingBottom: 24,
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: 16,
+        },
+        [theme.breakpoints.up('sm')]: {
+            paddingRight: 24,
+        },
     }
 }));
 
-function getSteps() {
-    return ['Eliminate negativity', 'Do a thing you love', 'Plan out the next day', 'Review goals', 'Allow a moment of reflection & prayer'];
-}
+const tutorialSteps = [
+    {
+        label: 'Eliminate negativity',
+        description: 'The best way to eliminiate negativity is to watch funny cat videos',
+    },
+    {
+        label: 'Do a thing you love',
+        description: 'Before going to sleep do something you really love, like reading a book. Have you done that already? If not, try it out tomorrow!',
+    },
+    {
+        label: 'Plan out the next day',
+        description: 'Write down the 3 most important tasks for tomorrow and give them a specific timeframe.',
+    },
+    {
+        label: 'Review goals',
+        description: 'Have a look at your goals and edit them if needed',
+    },
+    {
+        label: 'Allow a moment of reflection & prayer',
+        description: 'To close your day and your thoughts, write down what you have learned today and what was satisfying. ',
+    },
+];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return `Get rid of negative thoughts before going to bed to clear up your mind. A proper laugh can help to let go of your thoughts.`;
-        case 1:
-            return 'An ad group contains one or more ads which target a shared set of keywords.';
-        case 2:
-            return `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`;
-        case 3:
-            return 'An ad group contains one or more ads which target a shared set of keywords.';
-        case 4:
-            return `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`;
-        default:
-            return 'Unknown step';
+
+
+class TodayPage extends Component {
+    constructor() {
+        super();
+        this.state = {
+            activeStep: 0,
+            openBackdrop: false,
+
+        }
     }
-}
+    render() {
+        const { goals, classes, theme, darkMode } = this.props;
+        const maxSteps = tutorialSteps.length;
+
+        const handleCloseBackDrop = () => {
+            this.setState({ openBackdrop: false });
+        };
+        const handleOpenBackDrop = () => {
+            this.setState({ activeStep: 0, openBackdrop: true });
+        };
+
+        const handleNext = () => {
+            this.setState((prevState) => ({
+                activeStep: prevState.activeStep + 1
+            }));
+        };
+
+        const handleBack = () => {
+            this.setState((prevState) => ({
+                activeStep: prevState.activeStep - 1
+            }));
+        };
 
 
-
-const TodayPage = (props) => {
-    const { goals, darkMode } = props;
-    const classes = useStyles();
-    const [openBackdrop, setOpenBackdrop] = React.useState(false);
-    const handleCloseBackDrop = () => {
-        setOpenBackdrop(false);
-    };
-    const handleOpenBackDrop = () => {
-        setOpenBackdrop(true);
-    };
-
-    const [activeStep, setActiveStep] = React.useState(0);
-    const steps = getSteps();
-
-    const handleNext = () => {
-        setActiveStep(prevActiveStep => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
-
-
-    return (
-        <Container className={classes.container}>
-            <Backdrop className={classes.backdropRoutine} open={openBackdrop}>
-                <Container className={classes.containerRoutine}>
-                    <Paper className={classes.paperRoutine} elevation={3}>
-                        <Button
-                            variant="contained"
-                            color={darkMode ? "secondary" : "primary"}
-                            size="medium"
-                            className={classes.buttonCloseRoutine}
-                            onClick={handleCloseBackDrop}
-                            startIcon={<CancelIcon />}
-                        >Cancel</Button>
-                        <Container className={classes.containerStepper}>
-                            <Stepper activeStep={activeStep} orientation="vertical">
-                                {steps.map((label, index) => (
-                                    <Step key={label}>
-                                        <StepLabel>{label}</StepLabel>
-                                        <StepContent>
-                                            <Typography>{getStepContent(index)}</Typography>
-                                            <div className={classes.actionsContainer}>
-                                                <div>
-                                                    <Button
-                                                        disabled={activeStep === 0}
-                                                        onClick={handleBack}
-                                                        className={classes.button}
-                                                    >
-                                                        Back
-                                                </Button>
-                                                    <Button
-                                                        variant="contained"
-                                                        color="primary"
-                                                        onClick={handleNext}
-                                                        className={classes.button}
-                                                    >
-                                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        </StepContent>
-                                    </Step>
-                                ))}
-                            </Stepper>
-                            {activeStep === steps.length && (
-                                <Paper square elevation={0} className={classes.resetContainer}>
-                                    <Typography>All steps completed - you&apos;re finished</Typography>
-                                    <Button onClick={handleReset} className={classes.button}>
-                                        Reset
-                                </Button>
+        return (
+            <Container className={classes.container}>
+                <Backdrop className={classes.backdropRoutine} open={this.state.openBackdrop}>
+                    <Container className={classes.containerRoutine}>
+                        <Paper className={classes.paperRoutine} elevation={3}>
+                            <Container className={classes.containerStepper}>
+                                <Paper square elevation={0} className={classes.headerStepper}>
+                                    <Typography>{tutorialSteps[this.state.activeStep].label}</Typography>
                                 </Paper>
-                            )}
-                        </Container>
-                    </Paper>
-                </Container>
-            </Backdrop>
-            <Box className={classes.boxButton}>
-                <Button
-                    variant="contained"
-                    color={darkMode ? "secondary" : "primary"}
-                    size="large"
-                    className={classes.button}
-                    onClick={handleOpenBackDrop}
-                    startIcon={<PlayCircleOutlineIcon />}
-                >
-                    Start Routine
-                </Button>
-            </Box>
-        </Container>);
-}
+                                <Typography className={classes.typoStepper}>{tutorialSteps[this.state.activeStep].description}</Typography>
+                                <MobileStepper
+                                    steps={maxSteps}
+                                    position="static"
+                                    variant="progress"
+                                    activeStep={this.state.activeStep}
+                                    className={classes.stepper}
+                                    nextButton={
+                                        <Button size="small" onClick={handleNext} disabled={this.state.activeStep === maxSteps - 1}>
+                                            Next
+                                        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                                        </Button>
+                                    }
+                                    backButton={
+                                        <Button size="small" onClick={handleBack} disabled={this.state.activeStep === 0}>
+                                            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                                            Back
+                                    </Button>
+                                    }
+                                />
+                            </Container>
+                            <Box className={classes.boxButtonSaveClose}>
+                                <Button
+                                    variant="outlined"
+                                    color={darkMode ? "secondary" : "primary"}
+                                    size="large"
+                                    className={classes.buttonSaveCloseRoutine}
+                                    onClick={handleCloseBackDrop}
+                                    disabled={!(this.state.activeStep === maxSteps - 1)}
+                                >Save</Button>
+                                <Button
+                                    variant="outlined"
+                                    color={darkMode ? "secondary" : "primary"}
+                                    size="large"
+                                    className={classes.buttonSaveCloseRoutine}
+                                    onClick={handleCloseBackDrop}
+                                >Cancel</Button>
+                            </Box>
 
-export default TodayPage;
+                        </Paper>
+                    </Container>
+                </Backdrop>
+                <Box className={classes.boxButton}>
+                    <Button
+                        variant="contained"
+                        color={darkMode ? "secondary" : "primary"}
+                        size="large"
+                        className={classes.button}
+                        onClick={handleOpenBackDrop}
+                        startIcon={<PlayCircleOutlineIcon />}
+                    >
+                        Start Routine
+                </Button>
+                </Box>
+            </Container>);
+    };
+}
+export default withTheme(withStyles(styles)(TodayPage));
