@@ -52,8 +52,8 @@ class EditGoalDialog extends Component {
         this.setState(newState);
     }
 
-    comp() {
-        if (this.props.open) {
+    componentDidUpdate() {
+        if (this.props.initialGoal !== this.state.goalToBeEdited) {
             this.setState({ goalToBeEdited: this.props.initialGoal });
         }
     }
