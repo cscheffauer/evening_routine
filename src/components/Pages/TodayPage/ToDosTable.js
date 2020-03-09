@@ -17,8 +17,14 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import TextField from '@material-ui/core/TextField';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
+import TableCell from '@material-ui/core/TableCell';
 
 import { GOAL_CATEGORIES } from '../../../constants';
+
+const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
+
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -53,14 +59,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ReviewGoalsTable = (props) => {
+const ToDosTable = (props) => {
     const { goals } = props;
 
     const classes = useStyles();
 
 
+    const getRenderValue = (props) => {
+        if (props.plannedTime instanceof Date) {
+            return props.plannedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } else if (isoDateRegex.exec(props.plannedTime)) {
+            return new Date(props.plannedTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } else {
+            return props.plannedTime;
+        }
+    }
+
+
     const [goalTableState, setGoalTableState] = useState({
         columns: [
+
             { title: 'Title', field: 'title' },
             {
                 title: 'Description', field: 'description',
@@ -82,13 +100,40 @@ const ReviewGoalsTable = (props) => {
                 )
             },
             {
-                title: 'Category',
-                field: 'category',
-                lookup: GOAL_CATEGORIES
+                title: 'Planned at',
+                field: 'plannedTime',
+                type: 'time',
+                editComponent: props => (
+                    <MuiPickersUtilsProvider
+                        utils={DateFnsUtils}
+                        locale={props.dateTimePickerLocalization}>
+                        <TimePicker
+                            {...props}
+                            format="HH:mm"
+                            value={props.value || null}
+                            onChange={props.onChange}
+                            clearable
+                            InputProps={{
+                                style: {
+                                    fontSize: 13,
+                                }
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
+                ),
+                render: props => (
+                    <TableCell
+                        size={props.size}
+                        {...props}
+                    >
+                        {props.children}
+                        {getRenderValue(props)}
+                    </TableCell>)
             },
+
         ],
         data: [
-            { title: 'test', description: 'test', category: GOAL_CATEGORIES.GOAL_CAT_EDUCATIONAL },
+            {},
         ],
     });
 
@@ -98,7 +143,7 @@ const ReviewGoalsTable = (props) => {
                 width: '100%',
             }}
             icons={tableIcons}
-            title="Your goals"
+            title="Your tasks for tomorrow"
             columns={goalTableState.columns}
             data={goalTableState.data}
             options={{
@@ -149,4 +194,4 @@ const ReviewGoalsTable = (props) => {
     );
 }
 
-export default ReviewGoalsTable;
+export default ToDosTable;

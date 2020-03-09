@@ -93,7 +93,7 @@ class TodayPage extends Component {
     }
 
     render() {
-        const { classes, theme, darkMode } = this.props;
+        const { goals, classes, theme, darkMode } = this.props;
         const maxSteps = 5;
 
         const handleCloseBackDrop = () => {
@@ -136,7 +136,7 @@ class TodayPage extends Component {
                                     activeStep={this.state.activeStep}
                                     classes={{ progress: classes.progress }}    //to get the inner "progress" class of the MobileStepper 
                                     nextButton={
-                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleNext} disabled={this.state.activeStep === maxSteps - 1}>
+                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleNext} disabled={(this.state.activeStep === maxSteps - 1) || (this.state.activeStep === 2 && goals.length === 0)} >
                                             Next
                                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                                         </Button>

@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 
 
 import Scroll from '../../Layout/Scroll/Scroll'
-import GoalsTable from './ReviewGoalsTable'
+import ToDosTable from './ToDosTable';
 import GoalsPage from '../GoalsPage/GoalsPage';
 
 import { addGoal, editGoal, removeGoal } from '../../../actions/actions'
@@ -81,6 +81,12 @@ const useStyles = makeStyles(theme => ({
         width: '90%',
     },
     boxReviewGoals: {
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        width: '90%',
+    },
+    boxToDos: {
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -216,6 +222,9 @@ const StepContent = (props) => {
                 }{
                     activeStep === 3 &&
                     <>
+                        <Box className={classes.boxToDos}>
+                            <ToDosTable />
+                        </Box>
                     </>
                 }
                 {

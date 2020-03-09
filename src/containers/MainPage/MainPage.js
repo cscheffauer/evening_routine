@@ -68,7 +68,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         } else if (route === TODAY_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageToday darkMode={darkMode} />
+                    <AsyncPageToday goals={goals} darkMode={darkMode} />
                 </Suspense>
             )
         } else if (route === HISTORY_ROUTE) {
