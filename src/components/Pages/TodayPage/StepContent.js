@@ -128,7 +128,7 @@ const StepContent = (props) => {
 
     const goalsPageOptions = {
         hideTitle: true,
-
+        noGoalsMessage: "No goals defined. Define at least one goal to move on.",
     }
 
     useEffect(() => {

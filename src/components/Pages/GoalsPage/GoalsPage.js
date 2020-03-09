@@ -105,8 +105,8 @@ const GoalsPage = (props) => {
                     </Grid>
                     :
                     <Typography className={classes.centerTypo} paragraph>
-                        No goals defined. Define at least one goal to start your evening routine.
-                        </Typography>
+                        {options.noGoalsMessage}
+                    </Typography>
                 }
             </Box>
             <Fab className={classes.buttonAdd} onClick={openAddGoalDialog} color={darkMode ? "secondary" : "primary"} aria-label="add">

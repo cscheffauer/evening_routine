@@ -68,7 +68,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         } else if (route === TODAY_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageToday goals={goals} darkMode={darkMode} />
+                    <AsyncPageToday darkMode={darkMode} />
                 </Suspense>
             )
         } else if (route === HISTORY_ROUTE) {
@@ -95,7 +95,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         const { route, onRouteChange, onDarkModeChange, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
         const goalsPageOptions = {
             hideTitle: false,
-
+            noGoalsMessage: "No goals defined. Define at least one goal to start your evening routine.",
         }
         let page = this.getRouteComponent(onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, goalsPageOptions);
 

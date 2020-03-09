@@ -93,7 +93,7 @@ class TodayPage extends Component {
     }
 
     render() {
-        const { goals, classes, theme, darkMode } = this.props;
+        const { classes, theme, darkMode } = this.props;
         const maxSteps = 5;
 
         const handleCloseBackDrop = () => {
