@@ -57,7 +57,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         };
     }
 
-    getRouteComponent = (onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal) => {
+    getRouteComponent = (onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, goalsPageOptions) => {
 
         if (route === INITIAL_ROUTE) {
             return (
@@ -86,14 +86,18 @@ class MainPage extends Component {   //class App will use the component lib / Co
         } else if (route === GOALS_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageGoals goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} darkMode={darkMode} />
+                    <AsyncPageGoals goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} options={goalsPageOptions} darkMode={darkMode} />
                 </Suspense>
             )
         }
     }
     render() {
         const { route, onRouteChange, onDarkModeChange, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
-        let page = this.getRouteComponent(onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal);
+        const goalsPageOptions = {
+            hideTitle: false,
+
+        }
+        let page = this.getRouteComponent(onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, goalsPageOptions);
 
         const goalsSet = (goals.length > 0 && route !== INITIAL_ROUTE) ? true : false;
 

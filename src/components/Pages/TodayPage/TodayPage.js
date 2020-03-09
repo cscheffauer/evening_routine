@@ -1,4 +1,4 @@
-import React, { Fragment, Component, } from 'react'
+import React, { Component, } from 'react';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -11,6 +11,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import StepContent from './StepContent';
+
 
 const styles = (theme => ({
     //toolbar: theme.mixins.toolbar,
@@ -81,7 +82,6 @@ const styles = (theme => ({
 }));
 
 
-
 class TodayPage extends Component {
     constructor() {
         super();
@@ -128,7 +128,7 @@ class TodayPage extends Component {
                     <Container className={classes.containerRoutine}>
                         <Paper className={classes.paperRoutine} elevation={3}>
                             <Container className={classes.containerStepper}>
-                                <StepContent activeStep={this.state.activeStep} randomGiphyURL={this.state.randomGiphyURL} shuffleGiphy={fetchRandomGiphy} darkMode={darkMode}></StepContent>
+                                <StepContent activeStep={this.state.activeStep} randomGiphyURL={this.state.randomGiphyURL} shuffleGiphy={fetchRandomGiphy}></StepContent>
                                 <MobileStepper
                                     steps={maxSteps}
                                     position="static"

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -6,6 +7,29 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
 import TextField from '@material-ui/core/TextField';
+
+
+import Scroll from '../../Layout/Scroll/Scroll'
+import GoalsTable from './ReviewGoalsTable'
+import GoalsPage from '../GoalsPage/GoalsPage';
+
+import { addGoal, editGoal, removeGoal } from '../../../actions/actions'
+
+const mapStateToProps = state => {
+    return {
+        darkMode: state.changeDarkMode.darkMode,
+        goals: state.changeGoals.goals                    // -''-
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAddGoal: (goal) => dispatch(addGoal(goal)),
+        onEditGoal: (goal, index) => dispatch(editGoal(goal, index)),
+        onRemoveGoal: (index) => dispatch(removeGoal(index)),
+    }
+}
+
 
 const useStyles = makeStyles(theme => ({
     headerStepper: {
@@ -56,6 +80,12 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         width: '90%',
     },
+    boxReviewGoals: {
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        width: '90%',
+    },
     textFieldRecapDay: {
         height: '100%',
     },
@@ -93,7 +123,40 @@ const routineSteps = [
 
 const StepContent = (props) => {
     const classes = useStyles();
-    const { activeStep, randomGiphyURL, shuffleGiphy, darkMode } = props;
+    const { activeStep, randomGiphyURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, darkMode } = props;
+    const [height, setHeight] = useState(window.innerHeight);
+
+    const goalsPageOptions = {
+        hideTitle: true,
+
+    }
+
+    useEffect(() => {
+        function handleResize() {
+            setHeight(window.innerHeight);
+        }
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [height]);
+
+    const getMaxRows = (height) => {
+        if (height > 1700) return 50
+        if (height > 1600) return 46
+        if (height > 1500) return 42
+        if (height > 1400) return 38
+        if (height > 1300) return 34
+        if (height > 1200) return 30
+        if (height > 1100) return 26
+        if (height > 1000) return 22
+        if (height > 900) return 18
+        if (height > 820) return 14
+        if (height > 750) return 10
+        if (height > 700) return 7
+        if (height > 630) return 5
+        if (height > 580) return 3
+        return 1
+    }
+
     return (
         <>
             <Paper square elevation={0} className={classes.headerStepper}>
@@ -132,19 +195,31 @@ const StepContent = (props) => {
                                 id="outlined-multiline-static"
                                 label="Notes of today"
                                 multiline
+                                rows={getMaxRows(height) * 3 / 4}
+                                rowsMax={getMaxRows(height)}
                                 className={classes.textFieldRecapDay}
                                 defaultValue="Write your notes of today here."
                                 variant="outlined"
-                                fullWidth="true"
+                                fullWidth={true}
                             />
                         </Box>
                     </>
                 }{
                     activeStep === 2 &&
                     <>
+                        <Box className={classes.boxReviewGoals}>
+                            <Scroll>
+                                <GoalsPage goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} options={goalsPageOptions} darkMode={darkMode} />
+                            </Scroll>
+                        </Box>
                     </>
                 }{
                     activeStep === 3 &&
+                    <>
+                    </>
+                }
+                {
+                    activeStep === 4 &&
                     <>
                     </>
                 }
@@ -153,4 +228,4 @@ const StepContent = (props) => {
     );
 }
 
-export default StepContent;
+export default connect(mapStateToProps, mapDispatchToProps)(StepContent);

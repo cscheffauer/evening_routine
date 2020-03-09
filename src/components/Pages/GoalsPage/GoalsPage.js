@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const GoalsPage = (props) => {
-    const { goals, onAddGoal, onEditGoal, onRemoveGoal, darkMode } = props;
+    const { goals, onAddGoal, onEditGoal, onRemoveGoal, options, darkMode } = props;
     const classes = useStyles();
 
     const initialNewGoal = {
@@ -85,11 +85,13 @@ const GoalsPage = (props) => {
     };
     return (
         <Container>
-            <Box>
-                <Typography className={classes.centerTypo} variant="h4">
-                    Your goals
+            {!options.hideTitle &&
+                <Box>
+                    <Typography className={classes.centerTypo} variant="h4">
+                        Your goals
                         </Typography>
-            </Box>
+                </Box>
+            }
             <Box className={classes.boxGoals} >
                 {goals.length > 0 ?
                     <Grid className={classes.root} item xs={12}>

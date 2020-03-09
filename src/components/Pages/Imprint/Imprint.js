@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './Imprint.css';
-import Scroll from '../../Scroll';
+import Scroll from '../../Layout/Scroll/Scroll';
 
 
 
