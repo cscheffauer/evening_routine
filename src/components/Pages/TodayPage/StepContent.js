@@ -223,7 +223,10 @@ const StepContent = (props) => {
                     activeStep === 3 &&
                     <>
                         <Box className={classes.boxToDos}>
-                            <ToDosTable />
+                            <Scroll>
+                                <ToDosTable />
+                            </Scroll>
+
                         </Box>
                     </>
                 }

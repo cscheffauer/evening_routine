@@ -103,6 +103,7 @@ const ToDosTable = (props) => {
                 title: 'Planned at',
                 field: 'plannedTime',
                 type: 'time',
+                emptyValue: '12:00',
                 editComponent: props => (
                     <MuiPickersUtilsProvider
                         utils={DateFnsUtils}
@@ -133,7 +134,6 @@ const ToDosTable = (props) => {
 
         ],
         data: [
-            {},
         ],
     });
 
@@ -141,6 +141,11 @@ const ToDosTable = (props) => {
         <MaterialTable
             style={{
                 width: '100%',
+            }}
+            localization={{
+                body: {
+                    emptyDataSourceMessage: 'No tasks defined.',
+                }
             }}
             icons={tableIcons}
             title="Your tasks for tomorrow"
