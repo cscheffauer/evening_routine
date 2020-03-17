@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 
 
 import Scroll from '../../Layout/Scroll/Scroll'
-import ToDosTable from './ToDosTable';
+import ToDosTable from './TasksTable';
 import GoalsPage from '../GoalsPage/GoalsPage';
 
 import { addGoal, editGoal, removeGoal } from '../../../actions/actions'
@@ -120,8 +120,8 @@ const routineSteps = [
         description: ['This is one of the most important things you can do before tomorrow morning. ', 'Write down the 3 most important tasks for tomorrow and give them a specific timeframe:'],
     },
     {
-        label: 'Allow a moment of reflection & prayer',
-        description: ['To close your day and your thoughts, write down what you have learned today and what was satisfying. '],
+        label: 'Give your body some digital time off',
+        description: ['After you have finished your evening routine shutdown all your devices or set them into flight mode, before going to sleep.', 'We suggest to stay offline a minimum of 30min before going to bed to signalize your body that it\'s time to sleep.', 'Hit the Save button below to save your routine and good night 😴'],
     },
 ];
 
@@ -129,7 +129,7 @@ const routineSteps = [
 
 const StepContent = (props) => {
     const classes = useStyles();
-    const { activeStep, randomGiphyURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, darkMode } = props;
+    const { activeStep, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, darkMode } = props;
     const [height, setHeight] = useState(window.innerHeight);
 
     const goalsPageOptions = {
@@ -180,7 +180,7 @@ const StepContent = (props) => {
                     <>
                         <Box className={classes.boxGiphy}>
                             <Box className={classes.boxGiphyImage}>
-                                <div style={{ backgroundImage: 'url(' + randomGiphyURL + ')' }} className={classes.giphy} />
+                                <div style={{ backgroundImage: 'url(' + randomGiphyCatURL + ')' }} className={classes.giphy} />
                                 {/*<img alt="Giphy" className={classes.giphy} src={randomGiphyURL} />*/}
                             </Box>
                             <Button
@@ -233,6 +233,11 @@ const StepContent = (props) => {
                 {
                     activeStep === 4 &&
                     <>
+                        <Box className={classes.boxGiphy}>
+                            <Box className={classes.boxGiphyImage}>
+                                <div style={{ backgroundImage: 'url(' + randomGiphySleepURL + ')' }} className={classes.giphy} />
+                            </Box>
+                        </Box>
                     </>
                 }
             </Box>

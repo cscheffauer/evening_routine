@@ -85,30 +85,36 @@ const styles = (theme => ({
 class TodayPage extends Component {
     constructor() {
         super();
+        this.fetchRandomGiphy('cat');
+        this.fetchRandomGiphy('sleep');
         this.state = {
             activeStep: 0,
             openBackdrop: false,
-            randomGiphyURL: ''
+            randomGiphyCatURL: '',
+            randomGiphySleepURL: '',
+            tasks: [],
         }
+    }
+    fetchRandomGiphy = (tag) => {
+        fetch('https://api.giphy.com/v1/gifs/random?api_key=mcJc4PG0eNZeswDk8cJEpWbDY3e8FBOI&tag=' + tag + '&rating=PG')
+            .then(response => response.json())
+            .then(response => {
+                tag === 'cat' && this.setState({ randomGiphyCatURL: response.data.image_original_url })
+                tag === 'sleep' && this.setState({ randomGiphySleepURL: response.data.image_original_url })
+            }
+            );
     }
 
     render() {
         const { goals, classes, theme, darkMode } = this.props;
         const maxSteps = 5;
 
-        const handleCloseBackDrop = () => {
-            this.setState({ openBackdrop: false });
-        };
-
-        const fetchRandomGiphy = (tag) => {
-            fetch('https://api.giphy.com/v1/gifs/random?api_key=mcJc4PG0eNZeswDk8cJEpWbDY3e8FBOI&tag=' + tag + '&rating=PG')
-                .then(response => response.json())
-                .then(response => this.setState({ randomGiphyURL: response.data.image_original_url }));
-        }
-
         const handleOpenBackDrop = () => {
             this.setState({ activeStep: 0, openBackdrop: true });
-            fetchRandomGiphy('cat');
+        };
+
+        const handleCloseBackDrop = () => {
+            this.setState({ openBackdrop: false });
         };
 
         const handleNext = () => {
@@ -116,19 +122,25 @@ class TodayPage extends Component {
                 activeStep: prevState.activeStep + 1
             }));
         };
-
         const handleBack = () => {
             this.setState((prevState) => ({
                 activeStep: prevState.activeStep - 1
             }));
         };
+
+        const disableNext = () => {
+            return (this.state.activeStep === maxSteps - 1)
+                || (this.state.activeStep === 2 && goals.length === 0)
+                || (this.state.activeStep === 3 && this.state.tasks.length < 3)
+        }
+
         return (
             <Container className={classes.container}>
                 <Backdrop className={classes.backdropRoutine} open={this.state.openBackdrop}>
                     <Container className={classes.containerRoutine}>
                         <Paper className={classes.paperRoutine} elevation={3}>
                             <Container className={classes.containerStepper}>
-                                <StepContent activeStep={this.state.activeStep} randomGiphyURL={this.state.randomGiphyURL} shuffleGiphy={fetchRandomGiphy}></StepContent>
+                                <StepContent activeStep={this.state.activeStep} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
                                 <MobileStepper
                                     steps={maxSteps}
                                     position="static"
@@ -136,7 +148,7 @@ class TodayPage extends Component {
                                     activeStep={this.state.activeStep}
                                     classes={{ progress: classes.progress }}    //to get the inner "progress" class of the MobileStepper 
                                     nextButton={
-                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleNext} disabled={(this.state.activeStep === maxSteps - 1) || (this.state.activeStep === 2 && goals.length === 0)} >
+                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleNext} disabled={disableNext()} >
                                             Next
                                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                                         </Button>

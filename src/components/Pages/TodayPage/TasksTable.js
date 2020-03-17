@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const ToDosTable = (props) => {
-    const { goals } = props;
+    const { tasks } = props;
 
     const classes = useStyles();
 
@@ -76,7 +76,7 @@ const ToDosTable = (props) => {
     }
 
 
-    const [goalTableState, setGoalTableState] = useState({
+    const [tasksTableState, setTasksTableState] = useState({
         columns: [
 
             { title: 'Title', field: 'title' },
@@ -149,8 +149,8 @@ const ToDosTable = (props) => {
             }}
             icons={tableIcons}
             title="Your tasks for tomorrow"
-            columns={goalTableState.columns}
-            data={goalTableState.data}
+            columns={tasksTableState.columns}
+            data={tasksTableState.data}
             options={{
                 filtering: false,
                 search: false,
@@ -163,7 +163,7 @@ const ToDosTable = (props) => {
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            setGoalTableState(prevState => {
+                            setTasksTableState(prevState => {
                                 const data = [...prevState.data];
                                 data.push(newData);
                                 return { ...prevState, data };
@@ -175,7 +175,7 @@ const ToDosTable = (props) => {
                         setTimeout(() => {
                             resolve();
                             if (oldData) {
-                                setGoalTableState(prevState => {
+                                setTasksTableState(prevState => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
@@ -187,7 +187,7 @@ const ToDosTable = (props) => {
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            setGoalTableState(prevState => {
+                            setTasksTableState(prevState => {
                                 const data = [...prevState.data];
                                 data.splice(data.indexOf(oldData), 1);
                                 return { ...prevState, data };
