@@ -92,9 +92,11 @@ class TodayPage extends Component {
             openBackdrop: false,
             randomGiphyCatURL: '',
             randomGiphySleepURL: '',
-            tasks: [],
+            tasksToBeSaved: [],
         }
     }
+
+
     fetchRandomGiphy = (tag) => {
         fetch('https://api.giphy.com/v1/gifs/random?api_key=mcJc4PG0eNZeswDk8cJEpWbDY3e8FBOI&tag=' + tag + '&rating=PG')
             .then(response => response.json())
@@ -108,6 +110,11 @@ class TodayPage extends Component {
     render() {
         const { goals, classes, theme, darkMode } = this.props;
         const maxSteps = 5;
+
+        const onChangeTask = (changedTasks) => {
+            console.log(changedTasks);
+            this.setState({ tasksToBeSaved: changedTasks });
+        }
 
         const handleOpenBackDrop = () => {
             this.setState({ activeStep: 0, openBackdrop: true });
@@ -131,7 +138,7 @@ class TodayPage extends Component {
         const disableNext = () => {
             return (this.state.activeStep === maxSteps - 1)
                 || (this.state.activeStep === 2 && goals.length === 0)
-                || (this.state.activeStep === 3 && this.state.tasks.length < 3)
+                || (this.state.activeStep === 3 && this.state.tasksToBeSaved.length < 3)
         }
 
         return (
@@ -140,7 +147,7 @@ class TodayPage extends Component {
                     <Container className={classes.containerRoutine}>
                         <Paper className={classes.paperRoutine} elevation={3}>
                             <Container className={classes.containerStepper}>
-                                <StepContent activeStep={this.state.activeStep} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
+                                <StepContent activeStep={this.state.activeStep} onChangeTask={onChangeTask} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
                                 <MobileStepper
                                     steps={maxSteps}
                                     position="static"

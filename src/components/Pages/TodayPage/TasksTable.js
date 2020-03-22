@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import MaterialTable from 'material-table';
-import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -19,11 +18,8 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
-import TableCell from '@material-ui/core/TableCell';
 
-import { GOAL_CATEGORIES } from '../../../constants';
-
-const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3])\:[0-5]\d|24\:00)(\:[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3])\:?([0-5]\d)?)?)?$/;
+const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
 
 const tableIcons = {
@@ -47,31 +43,17 @@ const tableIcons = {
 };
 
 
-const useStyles = makeStyles(theme => ({
-    table: {
-        backgroundColor: '#111111',
-    },
-    innerTextField: {
-        '& label.Mui-focused': {
-            color: 'green',
-        },
-    },
-}));
 
-
-const ToDosTable = (props) => {
-    const { tasks } = props;
-
-    const classes = useStyles();
-
+const TasksTable = (props) => {
+    const { onChangeTask } = props;
 
     const getRenderValue = (props) => {
-        if (props.plannedTime instanceof Date) {
-            return props.plannedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        } else if (isoDateRegex.exec(props.plannedTime)) {
-            return new Date(props.plannedTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (props.plannedtime instanceof Date) {
+            return props.plannedtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } else if (isoDateRegex.exec(props.plannedtime)) {
+            return new Date(props.plannedtime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         } else {
-            return props.plannedTime;
+            return props.plannedtime;
         }
     }
 
@@ -84,13 +66,11 @@ const ToDosTable = (props) => {
                 title: 'Description', field: 'description',
                 editComponent: props => (
                     <TextField
-                        {...props}
-                        multiline
-                        style={props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
-                        type={props.columnDef.type === 'numeric' ? 'number' : 'text'}
-                        placeholder={props.columnDef.title}
-                        value={props.value === undefined ? '' : props.value}
-                        onChange={event => props.onChange(event.target.value)}
+                        value={props.value || ''}
+                        placeholder='Description'
+                        fullWidth={true}
+                        multiline={true}
+                        onChange={e => props.onChange(e.target.value)}
                         InputProps={{
                             style: {
                                 fontSize: 13,
@@ -101,7 +81,7 @@ const ToDosTable = (props) => {
             },
             {
                 title: 'Planned at',
-                field: 'plannedTime',
+                field: 'plannedtime',
                 type: 'time',
                 emptyValue: '12:00',
                 editComponent: props => (
@@ -109,7 +89,6 @@ const ToDosTable = (props) => {
                         utils={DateFnsUtils}
                         locale={props.dateTimePickerLocalization}>
                         <TimePicker
-                            {...props}
                             format="HH:mm"
                             value={props.value || null}
                             onChange={props.onChange}
@@ -121,21 +100,22 @@ const ToDosTable = (props) => {
                             }}
                         />
                     </MuiPickersUtilsProvider>
-                ),
-                render: props => (
-                    <TableCell
-                        size={props.size}
-                        {...props}
-                    >
-                        {props.children}
-                        {getRenderValue(props)}
-                    </TableCell>)
+                )
+                ,
+                render: props => getRenderValue(props)
             },
 
         ],
         data: [
         ],
     });
+
+
+    useEffect(() => {
+        onChangeTask(tasksTableState.data);
+        return;
+    }, [tasksTableState]);
+
 
     return (
         <MaterialTable
@@ -199,4 +179,4 @@ const ToDosTable = (props) => {
     );
 }
 
-export default ToDosTable;
+export default TasksTable;

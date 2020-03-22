@@ -29,7 +29,7 @@ const AsyncPageMotivation = lazy(() => import('../../components/Pages/Motivation
 
 const AsyncPageGoals = lazy(() => import('../../components/Pages/GoalsPage/GoalsPage'));
 
-const AsyncPageImprint = lazy(() => import('../../components/Pages/Imprint/Imprint'));
+//const AsyncPageImprint = lazy(() => import('../../components/Pages/Imprint/Imprint'));
 
 
 

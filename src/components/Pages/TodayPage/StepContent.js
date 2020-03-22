@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
+
 import TextField from '@material-ui/core/TextField';
 
-
 import Scroll from '../../Layout/Scroll/Scroll'
-import ToDosTable from './TasksTable';
+import TasksTable from './TasksTable';
 import GoalsPage from '../GoalsPage/GoalsPage';
 
 import { addGoal, editGoal, removeGoal } from '../../../actions/actions'
+
 
 const mapStateToProps = state => {
     return {
@@ -31,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     headerStepper: {
 
     },
@@ -86,7 +87,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         width: '90%',
     },
-    boxToDos: {
+    boxTasks: {
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -100,7 +101,7 @@ const useStyles = makeStyles(theme => ({
             color: 'green',
         },
     },
-}));
+});
 
 const routineSteps = [
     {
@@ -125,124 +126,136 @@ const routineSteps = [
     },
 ];
 
-
-
-const StepContent = (props) => {
-    const classes = useStyles();
-    const { activeStep, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, darkMode } = props;
-    const [height, setHeight] = useState(window.innerHeight);
-
-    const goalsPageOptions = {
-        hideTitle: true,
-        noGoalsMessage: "No goals defined. Define at least one goal to move on.",
-    }
-
-    useEffect(() => {
-        function handleResize() {
-            setHeight(window.innerHeight);
-        }
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [height]);
-
-    const getMaxRows = (height) => {
-        if (height > 1700) return 50
-        if (height > 1600) return 46
-        if (height > 1500) return 42
-        if (height > 1400) return 38
-        if (height > 1300) return 34
-        if (height > 1200) return 30
-        if (height > 1100) return 26
-        if (height > 1000) return 22
-        if (height > 900) return 18
-        if (height > 820) return 14
-        if (height > 750) return 10
-        if (height > 700) return 7
-        if (height > 630) return 5
-        if (height > 580) return 3
-        return 1
-    }
-
-    return (
-        <>
-            <Paper square elevation={0} className={classes.headerStepper}>
-                <Typography variant="h4">{routineSteps[activeStep].label}</Typography>
-            </Paper>
-            {
-                routineSteps[activeStep].description
-                    .map((part, index) =>
-                        <Typography key={index} className={classes.typoStepper}>{part}</Typography>
-                    )
-            }
-            <Box className={classes.boxStepperContent}>
-                {
-                    activeStep === 0 &&
-                    <>
-                        <Box className={classes.boxGiphy}>
-                            <Box className={classes.boxGiphyImage}>
-                                <div style={{ backgroundImage: 'url(' + randomGiphyCatURL + ')' }} className={classes.giphy} />
-                                {/*<img alt="Giphy" className={classes.giphy} src={randomGiphyURL} />*/}
-                            </Box>
-                            <Button
-                                variant="contained"
-                                color={darkMode ? "secondary" : "primary"}
-                                size="small"
-                                className={classes.buttonShuffleGiphy}
-                                onClick={() => shuffleGiphy('cat')}
-                            ><ShuffleIcon /></Button>
-                        </Box>
-
-                    </>
-                }{
-                    activeStep === 1 &&
-                    <>
-                        <Box className={classes.boxRecapDay}>
-                            <TextField
-                                id="outlined-multiline-static"
-                                label="Notes of today"
-                                multiline
-                                rows={getMaxRows(height) * 3 / 4}
-                                rowsMax={getMaxRows(height)}
-                                className={classes.textFieldRecapDay}
-                                defaultValue="Write your notes of today here."
-                                variant="outlined"
-                                fullWidth={true}
-                            />
-                        </Box>
-                    </>
-                }{
-                    activeStep === 2 &&
-                    <>
-                        <Box className={classes.boxReviewGoals}>
-                            <Scroll>
-                                <GoalsPage goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} options={goalsPageOptions} darkMode={darkMode} />
-                            </Scroll>
-                        </Box>
-                    </>
-                }{
-                    activeStep === 3 &&
-                    <>
-                        <Box className={classes.boxToDos}>
-                            <Scroll>
-                                <ToDosTable />
-                            </Scroll>
-
-                        </Box>
-                    </>
-                }
-                {
-                    activeStep === 4 &&
-                    <>
-                        <Box className={classes.boxGiphy}>
-                            <Box className={classes.boxGiphyImage}>
-                                <div style={{ backgroundImage: 'url(' + randomGiphySleepURL + ')' }} className={classes.giphy} />
-                            </Box>
-                        </Box>
-                    </>
-                }
-            </Box>
-        </>
-    );
+const getMaxRows = (height) => {
+    if (height > 1700) return 50
+    if (height > 1600) return 46
+    if (height > 1500) return 42
+    if (height > 1400) return 38
+    if (height > 1300) return 34
+    if (height > 1200) return 30
+    if (height > 1100) return 26
+    if (height > 1000) return 22
+    if (height > 900) return 18
+    if (height > 820) return 14
+    if (height > 750) return 10
+    if (height > 700) return 7
+    if (height > 630) return 5
+    if (height > 580) return 3
+    return 1
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StepContent);
+
+class StepContent extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            goalsPageOptions: {
+                hideTitle: true,
+                noGoalsMessage: "No goals defined. Define at least one goal to move on.",
+            },
+            height: window.innerHeight
+        }
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener("resize", this.updateWindowDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateWindowDimensions.bind(this));
+    }
+
+    updateWindowDimensions() {
+        this.setState({ height: window.innerHeight });
+    }
+
+
+    render() {
+        const { activeStep, onChangeTask, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, classes, darkMode } = this.props;
+        return (
+            <>
+                <Paper square elevation={0} className={classes.headerStepper}>
+                    <Typography variant="h4">{routineSteps[activeStep].label}</Typography>
+                </Paper>
+                {
+                    routineSteps[activeStep].description
+                        .map((part, index) =>
+                            <Typography key={index} className={classes.typoStepper}>{part}</Typography>
+                        )
+                }
+                <Box className={classes.boxStepperContent}>
+                    {
+                        activeStep === 0 &&
+                        <>
+                            <Box className={classes.boxGiphy}>
+                                <Box className={classes.boxGiphyImage}>
+                                    <div style={{ backgroundImage: 'url(' + randomGiphyCatURL + ')' }} className={classes.giphy} />
+                                    {/*<img alt="Giphy" className={classes.giphy} src={randomGiphyURL} />*/}
+                                </Box>
+                                <Button
+                                    variant="contained"
+                                    color={darkMode ? "secondary" : "primary"}
+                                    size="small"
+                                    className={classes.buttonShuffleGiphy}
+                                    onClick={() => shuffleGiphy('cat')}
+                                ><ShuffleIcon /></Button>
+                            </Box>
+
+                        </>
+                    }{
+                        activeStep === 1 &&
+                        <>
+                            <Box className={classes.boxRecapDay}>
+                                <TextField
+                                    id="outlined-multiline-static"
+                                    label="Notes of today"
+                                    multiline
+                                    rows={getMaxRows(this.state.height) * 3 / 4}
+                                    rowsMax={getMaxRows(this.state.height)}
+                                    className={classes.textFieldRecapDay}
+                                    defaultValue="Write your notes of today here."
+                                    variant="outlined"
+                                    fullWidth={true}
+                                />
+                            </Box>
+                        </>
+                    }{
+                        activeStep === 2 &&
+                        <>
+                            <Box className={classes.boxReviewGoals}>
+                                <Scroll>
+                                    <GoalsPage goals={goals} onAddGoal={onAddGoal} onEditGoal={onEditGoal} onRemoveGoal={onRemoveGoal} options={this.state.goalsPageOptions} darkMode={darkMode} />
+                                </Scroll>
+                            </Box>
+                        </>
+                    }{
+                        activeStep === 3 &&
+                        <>
+                            <Box className={classes.boxTasks}>
+                                <Scroll>
+                                    <TasksTable onChangeTask={onChangeTask} />
+                                </Scroll>
+
+                            </Box>
+                        </>
+                    }
+                    {
+                        activeStep === 4 &&
+                        <>
+                            <Box className={classes.boxGiphy}>
+                                <Box className={classes.boxGiphyImage}>
+                                    <div style={{ backgroundImage: 'url(' + randomGiphySleepURL + ')' }} className={classes.giphy} />
+                                </Box>
+                            </Box>
+                        </>
+                    }
+                </Box>
+            </>
+        );
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StepContent));
