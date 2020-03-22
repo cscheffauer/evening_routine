@@ -117,10 +117,11 @@ class TodayPage extends Component {
         }
 
         const handleOpenBackDrop = () => {
-            this.setState({ activeStep: 0, openBackdrop: true });
+            this.setState({ activeStep: 0, openBackdrop: true, tasksToBeSaved: [] });
         };
 
         const handleCloseBackDrop = () => {
+            //show unsavedmessage before closing
             this.setState({ openBackdrop: false });
         };
 
