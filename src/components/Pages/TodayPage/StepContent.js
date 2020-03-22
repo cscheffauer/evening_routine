@@ -173,7 +173,7 @@ class StepContent extends Component {
 
 
     render() {
-        const { activeStep, onChangeTask, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, classes, darkMode } = this.props;
+        const { activeStep, tasks, onChangeTask, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, classes, darkMode } = this.props;
         return (
             <>
                 <Paper square elevation={0} className={classes.headerStepper}>
@@ -235,7 +235,7 @@ class StepContent extends Component {
                         <>
                             <Box className={classes.boxTasks}>
                                 <Scroll>
-                                    <TasksTable onChangeTask={onChangeTask} />
+                                    <TasksTable tasks={tasks} onChangeTask={onChangeTask} />
                                 </Scroll>
 
                             </Box>

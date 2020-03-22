@@ -135,22 +135,10 @@ class TodayPage extends Component {
             }));
         };
 
-        const openUnsavedChangesWarning = () => {
-            alert("attention - you might lose data");
-            //Pop up should open here with a warning about losing data
-            handleBack();
-        }
-
         const disableNext = () => {
             return (this.state.activeStep === maxSteps - 1)
                 || (this.state.activeStep === 2 && goals.length === 0)
                 || (this.state.activeStep === 3 && this.state.tasksToBeSaved.length < 3)
-        }
-
-        const showUnsavedChangesWarning = () => {
-            console.log(this.state.activeStep);
-            console.log(this.state.tasksToBeSaved.length);
-            return (this.state.activeStep === 3 && this.state.tasksToBeSaved.length > 0)
         }
 
         return (
@@ -159,7 +147,7 @@ class TodayPage extends Component {
                     <Container className={classes.containerRoutine}>
                         <Paper className={classes.paperRoutine} elevation={3}>
                             <Container className={classes.containerStepper}>
-                                <StepContent activeStep={this.state.activeStep} onChangeTask={onChangeTask} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
+                                <StepContent activeStep={this.state.activeStep} tasks={this.state.tasksToBeSaved} onChangeTask={onChangeTask} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
                                 <MobileStepper
                                     steps={maxSteps}
                                     position="static"
@@ -173,7 +161,7 @@ class TodayPage extends Component {
                                         </Button>
                                     }
                                     backButton={
-                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={showUnsavedChangesWarning() ? openUnsavedChangesWarning : handleBack} disabled={this.state.activeStep === 0}>
+                                        <Button style={{ fontSize: '1rem' }} size="large" onClick={handleBack} disabled={this.state.activeStep === 0}>
                                             {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                                             Back
                                     </Button>

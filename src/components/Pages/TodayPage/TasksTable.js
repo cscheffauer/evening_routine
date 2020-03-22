@@ -45,7 +45,7 @@ const tableIcons = {
 
 
 const TasksTable = (props) => {
-    const { onChangeTask } = props;
+    const { tasks, onChangeTask } = props;
 
     const getRenderValue = (props) => {
         if (props.plannedtime instanceof Date) {
@@ -106,8 +106,7 @@ const TasksTable = (props) => {
             },
 
         ],
-        data: [
-        ],
+        data: tasks,
     });
 
 
