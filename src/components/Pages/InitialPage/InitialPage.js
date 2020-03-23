@@ -30,28 +30,23 @@ const InitialPage = (props) => {
     const classes = useStyles();
     const { darkMode, onRouteChange } = props;
 
-    const [open, setOpen] = React.useState(false);
+    const [initialSnackBarOpen, setInitialSnackBarOpen] = React.useState(false);
     const [firstTimeVisited, setFirstTimeVisited] = React.useState(true);
-
-    const handleClick = () => {
-        setOpen(true);
-    };
 
     const handleCloseAndGoals = () => {
         setFirstTimeVisited(false);
-        setOpen(false);
+        setInitialSnackBarOpen(false);
         onRouteChange(GOALS_ROUTE);
     }
 
     useEffect(() => {
         if (firstTimeVisited) {
             const timer = setTimeout(() => {
-                handleClick();
+                setInitialSnackBarOpen(true);
             }, 2000);
             return () => clearTimeout(timer);
         }
-    }, [open])
-
+    }, [initialSnackBarOpen])
 
 
     return (
@@ -59,10 +54,10 @@ const InitialPage = (props) => {
             <Snackbar
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'center',
+                    horizontal: 'right',
                 }}
                 key={`center,bottom`}
-                open={open}
+                open={initialSnackBarOpen}
                 message="To start your evening routine, please fulfill your goals first."
                 action={
                     <>
