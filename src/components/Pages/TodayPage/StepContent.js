@@ -172,8 +172,15 @@ class StepContent extends Component {
     }
 
 
+
+
     render() {
-        const { activeStep, tasks, onChangeTask, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, classes, darkMode } = this.props;
+        const { activeStep, recapText, onChangeRecapText, tasks, onChangeTask, randomGiphyCatURL, randomGiphySleepURL, shuffleGiphy, goals, onAddGoal, onEditGoal, onRemoveGoal, classes, darkMode } = this.props;
+
+        const handleChangeRecapText = event => {
+            onChangeRecapText(event.target.value);
+        };
+
         return (
             <>
                 <Paper square elevation={0} className={classes.headerStepper}>
@@ -215,7 +222,8 @@ class StepContent extends Component {
                                     rows={getMaxRows(this.state.height) * 3 / 4}
                                     rowsMax={getMaxRows(this.state.height)}
                                     className={classes.textFieldRecapDay}
-                                    defaultValue="Write your notes of today here."
+                                    value={recapText}
+                                    onChange={handleChangeRecapText}
                                     variant="outlined"
                                     fullWidth={true}
                                 />

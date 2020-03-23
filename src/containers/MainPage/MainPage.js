@@ -35,6 +35,13 @@ const AsyncPageGoals = lazy(() => import('../../components/Pages/GoalsPage/Goals
 
 const styles = theme => ({
     //toolbar: theme.mixins.toolbar,
+    body: {
+        height: '100vh',
+        backgroundImage: 'url("../../images/backgrounds/background_coffee.jpg")',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+    },
     content: {
         [theme.breakpoints.down('sm')]: {
             marginTop: 56,
@@ -62,13 +69,13 @@ class MainPage extends Component {   //class App will use the component lib / Co
         if (route === INITIAL_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageInitial onRouteChange={onRouteChange} />
+                    <AsyncPageInitial darkMode={darkMode} onRouteChange={onRouteChange} />
                 </Suspense>
             )
         } else if (route === TODAY_ROUTE) {
             return (
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AsyncPageToday goals={goals} darkMode={darkMode} />
+                    <AsyncPageToday />
                 </Suspense>
             )
         } else if (route === HISTORY_ROUTE) {
@@ -92,7 +99,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         }
     }
     render() {
-        const { route, onRouteChange, onDarkModeChange, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
+        const { route, onRouteChange, onDarkModeChange, darkMode, classes, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
         const goalsPageOptions = {
             hideTitle: false,
             noGoalsMessage: "No goals defined. Define at least one goal to start your evening routine.",
@@ -102,12 +109,12 @@ class MainPage extends Component {   //class App will use the component lib / Co
         const goalsSet = (goals.length > 0 && route !== INITIAL_ROUTE) ? true : false;
 
         return (
-            <Fragment>
+            <div className={route === INITIAL_ROUTE ? classes.body : undefined}>
                 {<Header onRouteChange={onRouteChange} onDarkModeChange={onDarkModeChange} darkMode={darkMode} route={route} goalsSet={goalsSet} />}
                 <Wrapper>
                     {page}
                 </Wrapper>
-            </Fragment>
+            </div>
         )
     }
 }

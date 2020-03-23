@@ -1,6 +1,6 @@
 {
-    "name": "Star Wars Characters App",
-    "short_name": "Star Wars Characters",
+    "name": "",
+    "short_name": "",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -8,12 +8,12 @@
             "type": "image/png"
         },
         {
-            "src": "/android-chrome-384x384.png",
-            "sizes": "384x384",
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "theme_color": "#334053",
-    "background_color": "#334053",
+    "theme_color": "#333333",
+    "background_color": "#333333",
     "display": "standalone"
 }

@@ -1,4 +1,5 @@
 import React, { Component, } from 'react';
+import { connect } from 'react-redux';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -12,6 +13,22 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import StepContent from './StepContent';
 
+import { saveRoutine } from '../../../actions/actions'
+
+const INITIAL_RECAP_TEXT = 'Write your notes of today here.';
+
+const mapStateToProps = state => {
+    return {
+        darkMode: state.changeDarkMode.darkMode,
+        goals: state.changeGoals.goals                    // -''-
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSaveRoutine: (routine) => dispatch(saveRoutine(routine)),
+    }
+}
 
 const styles = (theme => ({
     //toolbar: theme.mixins.toolbar,
@@ -92,6 +109,7 @@ class TodayPage extends Component {
             openBackdrop: false,
             randomGiphyCatURL: '',
             randomGiphySleepURL: '',
+            recapText: INITIAL_RECAP_TEXT,
             tasksToBeSaved: [],
         }
     }
@@ -108,18 +126,19 @@ class TodayPage extends Component {
     }
 
     render() {
-        const { goals, classes, theme, darkMode } = this.props;
+        const { goals, onSaveRoutine, classes, theme, darkMode } = this.props;
         const maxSteps = 5;
 
         const onChangeTask = (changedTasks) => {
-            console.log(changedTasks);
             this.setState({ tasksToBeSaved: changedTasks });
+        }
+        const onChangeRecapText = (recapText) => {
+            this.setState({ recapText: recapText });
         }
 
         const handleOpenBackDrop = () => {
-            this.setState({ activeStep: 0, openBackdrop: true, tasksToBeSaved: [] });
+            this.setState({ activeStep: 0, openBackdrop: true, tasksToBeSaved: [], recapText: INITIAL_RECAP_TEXT });
         };
-
         const handleCloseBackDrop = () => {
             //show unsavedmessage before closing
             this.setState({ openBackdrop: false });
@@ -130,17 +149,27 @@ class TodayPage extends Component {
                 activeStep: prevState.activeStep + 1
             }));
         };
+        const disableNext = () => {
+            return (this.state.activeStep === maxSteps - 1)
+                || (this.state.activeStep === 2 && goals.length === 0)
+                || (this.state.activeStep === 3 && this.state.tasksToBeSaved.length < 3)
+        }
         const handleBack = () => {
             this.setState((prevState) => ({
                 activeStep: prevState.activeStep - 1
             }));
         };
 
-        const disableNext = () => {
-            return (this.state.activeStep === maxSteps - 1)
-                || (this.state.activeStep === 2 && goals.length === 0)
-                || (this.state.activeStep === 3 && this.state.tasksToBeSaved.length < 3)
-        }
+
+        const handleSaveRoutine = () => {
+            onSaveRoutine({
+                recap: this.state.recapText,
+                tasks: this.state.tasksToBeSaved,
+                goals: goals,
+                createdAt: new Date().toLocaleString()
+            });
+            this.setState({ openBackdrop: false });
+        };
 
         return (
             <Container className={classes.container}>
@@ -148,7 +177,7 @@ class TodayPage extends Component {
                     <Container className={classes.containerRoutine}>
                         <Paper className={classes.paperRoutine} elevation={3}>
                             <Container className={classes.containerStepper}>
-                                <StepContent activeStep={this.state.activeStep} tasks={this.state.tasksToBeSaved} onChangeTask={onChangeTask} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
+                                <StepContent activeStep={this.state.activeStep} recapText={this.state.recapText} onChangeRecapText={onChangeRecapText} tasks={this.state.tasksToBeSaved} onChangeTask={onChangeTask} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} shuffleGiphy={this.fetchRandomGiphy}></StepContent>
                                 <MobileStepper
                                     steps={maxSteps}
                                     position="static"
@@ -175,7 +204,7 @@ class TodayPage extends Component {
                                     color={darkMode ? "secondary" : "primary"}
                                     size="large"
                                     className={classes.buttonSaveCloseRoutine}
-                                    onClick={handleCloseBackDrop}
+                                    onClick={handleSaveRoutine}
                                     disabled={!(this.state.activeStep === maxSteps - 1)}
                                 >Save</Button>
                                 <Button
@@ -205,4 +234,4 @@ class TodayPage extends Component {
             </Container>);
     };
 }
-export default withTheme(withStyles(styles)(TodayPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(TodayPage)));

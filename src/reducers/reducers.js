@@ -5,6 +5,7 @@ import {
     ADD_GOAL,
     EDIT_GOAL,
     REMOVE_GOAL,
+    SAVE_ROUTINE,
 } from '../constants'       //get constants form constants file
 
 //import { getSunrise, getSunset } from 'sunrise-sunset-js';    //imports for sunrise, sunset calculcation
@@ -78,29 +79,7 @@ export const changeDarkMode = (state = initialDarkMode, action = {}) => {
 
 
 const initialGoals = {
-    goals: [
-        /*{
-            title: 'Programming more',
-            description: 'I would like to program more, spend my time on coding and create projects.',
-            category: 'Personal Development',
-        }, {
-            title: 'Get my dream job as a coder',
-            description: 'I would like to get that job at Google.',
-            category: 'Career',
-        }, {
-            title: 'More active',
-            description: 'I would like to be more active, do more sports.',
-            category: 'Physical & Health',
-        }, {
-            title: 'Get more money',
-            description: 'I would like to get more money.',
-            category: 'Financial',
-        }, {
-            title: 'More resistant to stress & anxiety',
-            description: 'I would like to get more resistant to stress & anxiety',
-            category: 'Psychological',
-        }*/
-    ]       //initial object in the redux store
+    goals: []
 }
 
 //changeGoals function -> use default params (initialState, empty action object)
@@ -133,37 +112,17 @@ export const changeGoals = (state = initialGoals, action = {}) => {
 }
 
 
-/**
- * REQUESTING PEOPLE REDUCER
- */
-
-/*
-
-const initialStatePeople = {
-    firstPeoplePending: false,
-    morePeoplePending: false,
-    people: [],
-    error: ''
+const initialRoutines = {
+    routines: []
 }
 
-export const requestPeople = (state = initialStatePeople, action = {}) => {
+export const changeRoutine = (state = initialRoutines, action = {}) => {
     switch (action.type) {
-        case REQUEST_FIRST_PEOPLE_PENDING:
-            return Object.assign({}, state, { firstPeoplePending: true })      //everything in the state + new state isPending
-        case REQUEST_FIRST_PEOPLE_SUCCESS:
-            return Object.assign({}, state, { people: action.payload, firstPeoplePending: false })      //everything in the state + new state isPending & people
-        case REQUEST_FIRST_IMAGES_SUCCESS:
-            return Object.assign({}, state, { people: action.payload })      //everything in the state + new state isPending & people
-        case REQUEST_MORE_PEOPLE_PENDING:
-            return Object.assign({}, state, { morePeoplePending: true })      //everything in the state + new state isPending
-        case REQUEST_MORE_PEOPLE_SUCCESS:
-            return Object.assign({}, state, { people: state.people.concat(action.payload), morePeoplePending: false })      //everything in the state + new state isPending & people
-        case REQUEST_MORE_IMAGES_SUCCESS:
-            return Object.assign({}, state, { people: [...state.people.slice(0, action.payload.position), ...action.payload.people] })      //everything in the state + new state isPending & people
-        case REQUEST_FIRST_PEOPLE_FAILED:
-            return Object.assign({}, state, { firstPeoplePending: false, error: action.payload })      //everything in the state + errorstate
+        case SAVE_ROUTINE:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
+            const newRoutines = [...state.routines, action.payload];
+            return Object.assign({}, state, { routines: newRoutines })
         default:
-            return state
+            return state    //if a other action comes in, return the state as it was passed over and do not change anything
     }
 }
-*/
+

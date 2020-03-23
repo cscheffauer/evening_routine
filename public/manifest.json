@@ -1,6 +1,6 @@
 {
-  "short_name": "Star Wars Characters",
-  "name": "Star Wars Characters App - visualizing Star Wars characters, fetched from swapi.co",
+  "short_name": "Evening Routine",
+  "name": "Evening Routine App - to close your day with your own evening routine.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,13 +13,13 @@
       "type": "image/png"
     },
     {
-      "src": "android-chrome-384x384.png",
-      "sizes": "384x384",
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#334053",
-  "background_color": "#334053"
+  "theme_color": "#333333",
+  "background_color": "#333333"
 }

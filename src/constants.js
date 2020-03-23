@@ -9,6 +9,8 @@ export const ADD_GOAL = 'ADD_GOAL';
 export const EDIT_GOAL = 'EDIT_GOAL';
 export const REMOVE_GOAL = 'REMOVE_GOAL';
 
+export const SAVE_ROUTINE = 'SAVE_ROUTINE';
+
 
 /*
 * REACT
