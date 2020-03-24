@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import RoutineDialog from './RoutineDialog';
+import Typography from '@material-ui/core/Typography';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -18,7 +19,8 @@ function Alert(props) {
 const mapStateToProps = state => {
     return {
         darkMode: state.changeDarkMode.darkMode,
-        goals: state.changeGoals.goals                    // -''-
+        goals: state.changeGoals.goals,
+        routines: state.changeRoutines.routines,                    // -''-
     }
 }
 
@@ -49,6 +51,10 @@ const styles = (theme => ({
         display: 'flex',
         justifyContent: 'center'
     },
+    centerTypo: {
+        textAlign: 'center',
+    },
+
 }));
 
 
@@ -62,6 +68,7 @@ class TodayPage extends Component {
             routineSavedMsgOpen: false,
             randomGiphyCatURL: '',
             randomGiphySleepURL: '',
+            routineToShow: {},
         }
     }
 
@@ -76,8 +83,38 @@ class TodayPage extends Component {
     }
 
     render() {
-        const { classes, darkMode } = this.props;
+        const { routines, classes, darkMode } = this.props;
 
+        const calculateRoutineToShow = () => {
+            var now = new Date();
+
+            var midnight = new Date(new Date().toDateString());
+            /*
+                        var six = new Date(new Date().toDateString());;
+                        six.setHours(midnight.getHours() + 6);
+            
+                        var eightteen = new Date(new Date().toDateString());
+                        eightteen.setHours(midnight.getHours() + 18);
+            
+                        var endofday = new Date(new Date().toDateString());
+                        endofday.setDate(midnight.getDate() + 1);
+                        endofday.setMilliseconds(endofday.getMilliseconds() - 1);
+            
+                        var yesterday = new Date(new Date().toDateString());
+                        yesterday.setDate(midnight.getDate() - 1);
+            */
+            var yesterdaySix = new Date(new Date().toDateString());
+            yesterdaySix.setDate(midnight.getDate() - 1);
+            yesterdaySix.setHours(yesterdaySix.getHours() + 6);
+
+            routines.sort((a, b) => {
+                return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+            });
+
+            this.setState({
+                routineToShow: routines.find(routine => (Date.parse(yesterdaySix) < Date.parse(routine.createdAt)) && (Date.parse(routine.createdAt) < Date.parse(now)))
+            });
+        }
 
         const handleOpenBackDrop = () => {
             this.setState({ openBackdrop: true });
@@ -96,6 +133,30 @@ class TodayPage extends Component {
         return (
             <Container className={classes.container}>
                 <RoutineDialog openBackdrop={this.state.openBackdrop} handleCloseBackDrop={handleCloseBackDrop} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} fetchRandomGiphy={this.fetchRandomGiphy} showRoutineSavedMsg={showRoutineSavedMsg} />
+                <Box>
+                    <Typography className={classes.centerTypo} variant="h4">
+                        Your tasks for today
+                        </Typography>
+                </Box>
+                <Box className={classes.boxTasks} >
+
+                    {
+                        /*<Grid className={classes.root} item xs={12}>
+                        <Grid container justify="center" spacing={3}>
+                            {goals.map((goal, index) => (
+                                <Grid key={index} item>
+                                    <GoalCard goal={goal} index={index} openEditGoalDialog={openEditGoalDialog} handleRemove={handleRemove} darkMode={darkMode} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Grid>
+                        :*/
+                        <Typography onClick={calculateRoutineToShow} className={classes.centerTypo} paragraph>
+                            No important tasks scheduled for today.
+                        </Typography>
+                    }
+                </Box>
+
                 <Box className={classes.boxButton}>
                     <Button
                         variant="contained"

@@ -113,10 +113,105 @@ export const changeGoals = (state = initialGoals, action = {}) => {
 
 
 const initialRoutines = {
-    routines: []
+    routines: [
+        {
+            recap: 'am 22....',
+            tasks: [
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 0
+                    }
+                },
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 1
+                    }
+                },
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 2
+                    }
+                }
+            ],
+            goals: [
+                {
+                    title: 'asdf',
+                    description: 'asdf',
+                    category: 'Educational'
+                }
+            ],
+            createdAt: 'Sun Mar 22 2020 23:24:34 GMT+0100 (Central European Standard Time)'
+        },
+        {
+            recap: 'am 24....',
+            tasks: [
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 0
+                    }
+                },
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 1
+                    }
+                },
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 2
+                    }
+                }
+            ],
+            goals: [
+                {
+                    title: 'asdf',
+                    description: 'asdf',
+                    category: 'Educational'
+                }
+            ],
+            createdAt: 'Tue Mar 24 2020 01:24:34 GMT+0100 (Central European Standard Time)'
+        },
+        {
+            recap: 'am 23....',
+            tasks: [
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 0
+                    }
+                },
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 1
+                    }
+                },
+                {
+                    title: 'asdf',
+                    tableData: {
+                        id: 2
+                    }
+                }
+            ],
+            goals: [
+                {
+                    title: 'asdf',
+                    description: 'asdf',
+                    category: 'Educational'
+                }
+            ],
+            createdAt: 'Mon Mar 23 2020 23:24:34 GMT+0100 (Central European Standard Time)'
+        },
+
+    ]
 }
 
-export const changeRoutine = (state = initialRoutines, action = {}) => {
+export const changeRoutines = (state = initialRoutines, action = {}) => {
     switch (action.type) {
         case SAVE_ROUTINE:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
             const newRoutines = [...state.routines, action.payload];

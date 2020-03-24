@@ -154,7 +154,7 @@ class RoutineDialog extends Component {
                 recap: this.state.recapText,
                 tasks: this.state.tasksToBeSaved,
                 goals: goals,
-                createdAt: new Date().toLocaleString()
+                createdAt: new Date().toString()
             });
             handleCloseBackDrop();
 
