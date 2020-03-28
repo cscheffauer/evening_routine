@@ -21,14 +21,41 @@ const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
     },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        [theme.breakpoints.up('md')]: {
+            maxWidth: 1280,
+            height: 'calc(100vh - (112px))',
+        },
+    },
     boxGoals: {
-        marginTop: 40,
+        height: '100%',
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    boxNoGoals: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    imgNoGoals: {
+        width: '55vh',
+        margin: '0 auto',
+    },
+    typoNoGoals: {
+        textAlign: 'center',
+        marginTop: 60,
     },
     buttonAdd: {
         display: 'flex',
         margin: 'auto',
         marginTop: 30,
-        marginBottom: 30
+        marginBottom: 30,
+        minHeight: 56,
     },
     centerTypo: {
         textAlign: 'center',
@@ -84,7 +111,7 @@ const GoalsPage = (props) => {
         setOpenEdit(false);
     };
     return (
-        <Container>
+        <Container className={!options.hideTitle && classes.container}>
             {!options.hideTitle &&
                 <Box>
                     <Typography className={classes.centerTypo} variant="h4">
@@ -104,9 +131,19 @@ const GoalsPage = (props) => {
                         </Grid>
                     </Grid>
                     :
-                    <Typography className={classes.centerTypo} paragraph>
-                        {options.noGoalsMessage}
-                    </Typography>
+                    !options.hideTitle ?
+                        <Box className={classes.boxNoGoals}>
+                            <img className={classes.imgNoGoals} src="/images/goals/noGoals.png" />
+                            <Typography className={classes.typoNoGoals} paragraph>
+                                {options.noGoalsMessage}
+                            </Typography>
+                        </Box>
+                        :
+                        <Typography className={classes.typoNoGoals} paragraph>
+                            {options.noGoalsMessage}
+                        </Typography>
+
+
                 }
             </Box>
             <Fab className={classes.buttonAdd} onClick={openAddGoalDialog} color={darkMode ? "secondary" : "primary"} aria-label="add">

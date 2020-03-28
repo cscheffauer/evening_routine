@@ -33,26 +33,36 @@ const styles = (theme => ({
     //toolbar: theme.mixins.toolbar,
     container: {
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         flexDirection: 'column',
         [theme.breakpoints.down('md')]: {
             height: '80vh',
         },
         [theme.breakpoints.up('md')]: {
-            height: '85vh',
+            height: 'calc(100vh - (112px))',
         }
     },
     button: {
-        marginTop: theme.spacing(1),
-        marginRight: theme.spacing(1),
     },
 
     boxButton: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 30,
+        marginBottom: 30,
     },
     centerTypo: {
         textAlign: 'center',
+    },
+    boxTasks: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    boxRecap: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
 
 }));
@@ -85,37 +95,6 @@ class TodayPage extends Component {
     render() {
         const { routines, classes, darkMode } = this.props;
 
-        const calculateRoutineToShow = () => {
-            var now = new Date();
-
-            var midnight = new Date(new Date().toDateString());
-            /*
-                        var six = new Date(new Date().toDateString());;
-                        six.setHours(midnight.getHours() + 6);
-            
-                        var eightteen = new Date(new Date().toDateString());
-                        eightteen.setHours(midnight.getHours() + 18);
-            
-                        var endofday = new Date(new Date().toDateString());
-                        endofday.setDate(midnight.getDate() + 1);
-                        endofday.setMilliseconds(endofday.getMilliseconds() - 1);
-            
-                        var yesterday = new Date(new Date().toDateString());
-                        yesterday.setDate(midnight.getDate() - 1);
-            */
-            var yesterdaySix = new Date(new Date().toDateString());
-            yesterdaySix.setDate(midnight.getDate() - 1);
-            yesterdaySix.setHours(yesterdaySix.getHours() + 6);
-
-            routines.sort((a, b) => {
-                return Date.parse(b.createdAt) - Date.parse(a.createdAt);
-            });
-
-            this.setState({
-                routineToShow: routines.find(routine => (Date.parse(yesterdaySix) < Date.parse(routine.createdAt)) && (Date.parse(routine.createdAt) < Date.parse(now)))
-            });
-        }
-
         const handleOpenBackDrop = () => {
             this.setState({ openBackdrop: true });
         };
@@ -133,13 +112,13 @@ class TodayPage extends Component {
         return (
             <Container className={classes.container}>
                 <RoutineDialog openBackdrop={this.state.openBackdrop} handleCloseBackDrop={handleCloseBackDrop} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} fetchRandomGiphy={this.fetchRandomGiphy} showRoutineSavedMsg={showRoutineSavedMsg} />
-                <Box>
-                    <Typography className={classes.centerTypo} variant="h4">
-                        Your tasks for today
-                        </Typography>
-                </Box>
-                <Box className={classes.boxTasks} >
 
+                <Box className={classes.boxTasks} >
+                    <Box>
+                        <Typography className={classes.centerTypo} variant="h4">
+                            Your tasks for today
+                        </Typography>
+                    </Box>
                     {
                         /*<Grid className={classes.root} item xs={12}>
                         <Grid container justify="center" spacing={3}>
@@ -151,8 +130,31 @@ class TodayPage extends Component {
                         </Grid>
                     </Grid>
                         :*/
-                        <Typography onClick={calculateRoutineToShow} className={classes.centerTypo} paragraph>
+                        <Typography className={classes.centerTypo} paragraph>
                             No important tasks scheduled for today.
+                        </Typography>
+                    }
+                </Box>
+
+                <Box className={classes.boxRecap} >
+                    <Box>
+                        <Typography className={classes.centerTypo} variant="h4">
+                            Your recap of yesterday
+                        </Typography>
+                    </Box>
+                    {
+                        /*<Grid className={classes.root} item xs={12}>
+                        <Grid container justify="center" spacing={3}>
+                            {goals.map((goal, index) => (
+                                <Grid key={index} item>
+                                    <GoalCard goal={goal} index={index} openEditGoalDialog={openEditGoalDialog} handleRemove={handleRemove} darkMode={darkMode} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Grid>
+                        :*/
+                        <Typography className={classes.centerTypo} paragraph>
+                            No recap found.
                         </Typography>
                     }
                 </Box>

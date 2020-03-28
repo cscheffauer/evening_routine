@@ -6,6 +6,7 @@ import {
     EDIT_GOAL,
     REMOVE_GOAL,
     SAVE_ROUTINE,
+    CALCULATE_ROUTINETOSHOW,
 } from '../constants'       //get constants form constants file
 
 //import { getSunrise, getSunset } from 'sunrise-sunset-js';    //imports for sunrise, sunset calculcation
@@ -208,14 +209,51 @@ const initialRoutines = {
             createdAt: 'Mon Mar 23 2020 23:24:34 GMT+0100 (Central European Standard Time)'
         },
 
-    ]
+    ],
+    routineToShow: {}
 }
 
+const calculateRoutineToShow = (routines) => {
+    var now = new Date();
+
+    var midnight = new Date(new Date().toDateString());
+    /*
+                var six = new Date(new Date().toDateString());;
+                six.setHours(midnight.getHours() + 6);
+    
+                var eightteen = new Date(new Date().toDateString());
+                eightteen.setHours(midnight.getHours() + 18);
+    
+                var endofday = new Date(new Date().toDateString());
+                endofday.setDate(midnight.getDate() + 1);
+                endofday.setMilliseconds(endofday.getMilliseconds() - 1);
+    
+                var yesterday = new Date(new Date().toDateString());
+                yesterday.setDate(midnight.getDate() - 1);
+    */
+    var yesterdaySix = new Date(new Date().toDateString());
+    yesterdaySix.setDate(midnight.getDate() - 1);
+    yesterdaySix.setHours(yesterdaySix.getHours() + 6);
+
+    routines.sort((a, b) => {
+        return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+    });
+    const routineToReturn = routines.find(routine => (Date.parse(yesterdaySix) < Date.parse(routine.createdAt)) && (Date.parse(routine.createdAt) <= Date.parse(now)));
+    return routineToReturn !== undefined ? routineToReturn : {};
+}
+
+
 export const changeRoutines = (state = initialRoutines, action = {}) => {
+    const routineToShow = {};
     switch (action.type) {
         case SAVE_ROUTINE:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
             const newRoutines = [...state.routines, action.payload];
-            return Object.assign({}, state, { routines: newRoutines })
+            routineToShow = calculateRoutineToShow(newRoutines);
+            return Object.assign({}, state, { routines: newRoutines, routineToShow: routineToShow })
+
+        case CALCULATE_ROUTINETOSHOW:
+            routineToShow = calculateRoutineToShow(...state.routines);
+            return Object.assign({}, state, { routineToShow: routineToShow })
         default:
             return state    //if a other action comes in, return the state as it was passed over and do not change anything
     }
