@@ -14,11 +14,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+
+const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
 
 function Alert(props) {
@@ -35,6 +38,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        
     }
 }
 
@@ -67,6 +71,18 @@ const styles = (theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    typoTaskTimePrim: {
+        margin: 'auto 20px auto 0px',
+        paddingRight: 20,
+        fontSize: '1.5rem',
+        borderRight: '3px #496AEA solid',
+    },
+    typoTaskTimeSec: {
+        margin: 'auto 20px auto 0px',
+        paddingRight: 20,
+        fontSize: '1.5rem',
+        borderRight: '3px #FBA435 solid',
     },
     boxRecap: {
         display: 'flex',
@@ -112,12 +128,27 @@ class TodayPage extends Component {
         const handleCloseBackDrop = () => {
             this.setState({ openBackdrop: false });
         };
-
         const showRoutineSavedMsg = () => {
             this.setState({ routineSavedMsgOpen: true });
         }
         const closeRoutineSavedMsg = () => {
             this.setState({ routineSavedMsgOpen: false });
+        }
+        const compareTasks = (a, b) => {
+            return Date.parse(a.plannedtime) - Date.parse(b.plannedtime);
+        }
+
+        const handleTaskDone = () => {
+        }
+
+        const getPlannedTimeRenderValue = (plannedtime) => {
+            if (plannedtime instanceof Date) {
+                return plannedtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else if (isoDateRegex.exec(plannedtime)) {
+                return new Date(plannedtime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                return plannedtime;
+            }
         }
 
         return (
@@ -134,26 +165,32 @@ class TodayPage extends Component {
                         routineToShow.tasks ?
                             <div className={classes.demo}>
                                 <List>
-                                    {routineToShow.tasks.forEach(task =>
-                                        <ListItem>
+                                    {routineToShow.tasks.sort((a, b) => compareTasks(a, b)).map(task =>
+                                        <ListItem key={task.tableData.id}>
                                             <ListItemAvatar>
-                                                <Typography className={classes.centerTypo} paragraph>
-                                                    18:00
+                                                <Typography className={darkMode ? classes.typoTaskTimeSec : classes.typoTaskTimePrim} paragraph>
+                                                    {getPlannedTimeRenderValue(task.plannedtime)}
                                                 </Typography>
                                             </ListItemAvatar>
                                             <ListItemText
                                                 primary={task.title}
-                                                secondary={'Secondary text'}
+                                                secondary={task.description}
                                             />
                                             <ListItemSecondaryAction>
-                                                <IconButton edge="end" aria-label="delete">
-                                                    <DeleteIcon />
-                                                </IconButton>
+                                                <Checkbox
+                                                    edge="start"
+                                                    checked={task.done}
+                                                    onChange={handleTaskDone}
+                                                    tabIndex={-1}
+                                                    disableRipple
+                                                    color={darkMode ? "secondary" : "primary"}
+                                                />
                                                 <IconButton edge="end" aria-label="delete">
                                                     <DeleteIcon />
                                                 </IconButton>
                                             </ListItemSecondaryAction>
                                         </ListItem>
+
                                     )}
                                 </List>
                             </div>
@@ -213,7 +250,7 @@ class TodayPage extends Component {
                         Evening routine has been saved!
                     </Alert>
                 </Snackbar>
-            </Container>);
+            </Container >);
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(TodayPage)));

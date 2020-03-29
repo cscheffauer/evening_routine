@@ -119,26 +119,32 @@ const initialRoutines = {
             recap: 'Gestern haben wir voll was tolles gemacht \n test \n nd mehr',
             tasks: [
                 {
-                    title: 'Essen',
-                    description: 'voigeil was essen',
+                    title: 'mittags',
+                    description: 'was essen',
+                    plannedtime: '2020-03-29T10:00:19.238Z',
                     tableData: {
                         id: 0
-                    }
+                    },
+                    done: false,
                 },
                 {
-                    title: 'Coding',
-                    description: 'voigeil was coden',
+                    title: 'abends',
+                    description: 'auftnocht',
+                    plannedtime: '2020-03-29T16:00:19.238Z',
                     tableData: {
                         id: 1
-                    }
+                    },
+                    done: false,
                 },
                 {
-                    title: 'Kochen',
-                    description: 'voigeil was kochen',
+                    title: 'nachmittags',
+                    description: 'nochmittog',
+                    plannedtime: '2020-03-29T13:00:19.238Z',
                     tableData: {
                         id: 2
-                    }
-                }
+                    },
+                    done: false,
+                },
             ],
             goals: [
                 {
@@ -147,7 +153,7 @@ const initialRoutines = {
                     category: 'Educational'
                 }
             ],
-            createdAt: 'Sat Mar 28 2020 23:24:34 GMT+0100 (Central European Standard Time)'
+            createdAt: 'Sat Mar 28 2020 23:24:34 GMT+0100 (Central European Standard Time)',
         },
         {
             recap: 'am 22....',
@@ -156,19 +162,22 @@ const initialRoutines = {
                     title: 'asdf',
                     tableData: {
                         id: 0
-                    }
+                    },
+                    done: true,
                 },
                 {
                     title: 'asdf',
                     tableData: {
                         id: 1
-                    }
+                    },
+                    done: true,
                 },
                 {
                     title: 'asdf',
                     tableData: {
                         id: 2
-                    }
+                    },
+                    done: true,
                 }
             ],
             goals: [
