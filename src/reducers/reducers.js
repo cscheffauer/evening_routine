@@ -286,7 +286,7 @@ export const changeRoutines = (state = initialRoutines, action = {}) => {
             return Object.assign({}, state, { routines: newRoutines, routineToShow: routineToShow })
 
         case CALCULATE_ROUTINETOSHOW:
-            routineToShow = calculateRoutineToShow(...state.routines);
+            routineToShow = calculateRoutineToShow(state.routines);
             return Object.assign({}, state, { routineToShow: routineToShow })
         default:
             return state    //if a other action comes in, return the state as it was passed over and do not change anything

@@ -111,7 +111,7 @@ const GoalsPage = (props) => {
         setOpenEdit(false);
     };
     return (
-        <Container className={!options.hideTitle && classes.container}>
+        <Container className={!options.hideTitle ? classes.container : undefined}>
             {!options.hideTitle &&
                 <Box>
                     <Typography className={classes.centerTypo} variant="h4">

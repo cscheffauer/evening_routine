@@ -64,7 +64,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
         };
     }
 
-    getRouteComponent = (onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, goalsPageOptions) => {
+    getRouteComponent = ({ onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, calculateRoutineToShow }, goalsPageOptions) => {
 
         if (route === INITIAL_ROUTE) {
             return (
@@ -73,6 +73,7 @@ class MainPage extends Component {   //class App will use the component lib / Co
                 </Suspense>
             )
         } else if (route === TODAY_ROUTE) {
+            calculateRoutineToShow();
             return (
                 <Suspense fallback={<LoadingSpinner />}>
                     <AsyncPageToday />
@@ -99,12 +100,12 @@ class MainPage extends Component {   //class App will use the component lib / Co
         }
     }
     render() {
-        const { route, onRouteChange, onDarkModeChange, darkMode, classes, goals, onAddGoal, onEditGoal, onRemoveGoal } = this.props;
+        const { route, onRouteChange, onDarkModeChange, darkMode, classes, goals } = this.props;
         const goalsPageOptions = {
             hideTitle: false,
             noGoalsMessage: "No goals defined. Define at least one goal to start your evening routine.",
         }
-        let page = this.getRouteComponent(onRouteChange, route, darkMode, goals, onAddGoal, onEditGoal, onRemoveGoal, goalsPageOptions);
+        let page = this.getRouteComponent(this.props, goalsPageOptions);
 
         const goalsSet = (goals.length > 0 && route !== INITIAL_ROUTE) ? true : false;
 

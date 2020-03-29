@@ -5,6 +5,7 @@ import {
     EDIT_GOAL,
     REMOVE_GOAL,
     SAVE_ROUTINE,
+    CALCULATE_ROUTINETOSHOW,
 } from '../constants'       //get constants form constants file
 
 
@@ -41,11 +42,17 @@ export const removeGoal = (index) => ({
     payload: index
 })
 
+
+
+
 export const saveRoutine = (routine) => ({
     type: SAVE_ROUTINE,                  //constants are usually capitalized - we use a variable here to avoid misspelling 
     payload: routine
 })
 
+export const calculateRoutineToShow = () => ({
+    type: CALCULATE_ROUTINETOSHOW
+})
 
 
 

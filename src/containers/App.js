@@ -2,7 +2,7 @@ import React, { Component } from 'react';   //destructuring (instead of React.Co
 import { connect } from 'react-redux';
 import MainPage from './MainPage/MainPage'
 
-import { setRoute, setDarkMode, addGoal, editGoal, removeGoal } from '../actions/actions'
+import { setRoute, setDarkMode, addGoal, editGoal, removeGoal, calculateRoutineToShow } from '../actions/actions'
 
 const mapStateToProps = state => {
     return {
@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
         onAddGoal: (goal) => dispatch(addGoal(goal)),
         onEditGoal: (goal, index) => dispatch(editGoal(goal, index)),
         onRemoveGoal: (index) => dispatch(removeGoal(index)),
+        calculateRoutineToShow: () => dispatch(calculateRoutineToShow())
     }
 }
 
