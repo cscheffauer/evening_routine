@@ -7,6 +7,7 @@ import {
     REMOVE_GOAL,
     SAVE_ROUTINE,
     CALCULATE_ROUTINETOSHOW,
+    CHANGE_TASK_DONE,
 } from '../constants'       //get constants form constants file
 
 //import { getSunrise, getSunset } from 'sunrise-sunset-js';    //imports for sunrise, sunset calculcation
@@ -116,11 +117,12 @@ export const changeGoals = (state = initialGoals, action = {}) => {
 const initialRoutines = {
     routines: [
         {
-            recap: 'Gestern haben wir voll was tolles gemacht \n test \n nd mehr',
+            id: 0,
+            recap: 'Yesterday I figured out how to build nice new stuff in React \nMore text here \nand even more here....',
             tasks: [
                 {
-                    title: 'mittags',
-                    description: 'was essen',
+                    title: 'Having lunch',
+                    description: 'eat something nice',
                     plannedtime: '2020-03-29T10:00:19.238Z',
                     tableData: {
                         id: 0
@@ -128,8 +130,8 @@ const initialRoutines = {
                     done: false,
                 },
                 {
-                    title: 'abends',
-                    description: 'auftnocht',
+                    title: 'Coding',
+                    description: 'more coding :)',
                     plannedtime: '2020-03-29T16:00:19.238Z',
                     tableData: {
                         id: 1
@@ -137,8 +139,8 @@ const initialRoutines = {
                     done: false,
                 },
                 {
-                    title: 'nachmittags',
-                    description: 'nochmittog',
+                    title: 'Sleeping',
+                    description: 'having a power nap',
                     plannedtime: '2020-03-29T13:00:19.238Z',
                     tableData: {
                         id: 2
@@ -156,6 +158,7 @@ const initialRoutines = {
             createdAt: 'Sat Mar 28 2020 23:24:34 GMT+0100 (Central European Standard Time)',
         },
         {
+            id: 1,
             recap: 'am 22....',
             tasks: [
                 {
@@ -190,6 +193,7 @@ const initialRoutines = {
             createdAt: 'Sun Mar 22 2020 23:24:34 GMT+0100 (Central European Standard Time)'
         },
         {
+            id: 2,
             recap: 'am 24....',
             tasks: [
                 {
@@ -221,6 +225,7 @@ const initialRoutines = {
             createdAt: 'Tue Mar 24 2020 01:24:34 GMT+0100 (Central European Standard Time)'
         },
         {
+            id: 3,
             recap: 'am 23....',
             tasks: [
                 {
@@ -290,13 +295,52 @@ export const changeRoutines = (state = initialRoutines, action = {}) => {
     var routineToShow = {};
     switch (action.type) {
         case SAVE_ROUTINE:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
-            const newRoutines = [...state.routines, action.payload];
+            const newRoutine = Object.assign({
+                id: Math.max(0, ...state.routines.map(r => r.id)) + 1,
+            }, action.payload);
+            const newRoutines = [...state.routines, newRoutine];
             routineToShow = calculateRoutineToShow(newRoutines);
             return Object.assign({}, state, { routines: newRoutines, routineToShow: routineToShow })
 
         case CALCULATE_ROUTINETOSHOW:
             routineToShow = calculateRoutineToShow(state.routines);
             return Object.assign({}, state, { routineToShow: routineToShow })
+
+        case CHANGE_TASK_DONE:
+            return Object.assign({}, state,
+                {
+                    routines: state.routines.map((routine) => routine.id === action.payload.routineIndex ?
+                        // transform the routine with a matching routineIndex
+                        Object.assign({}, routine,
+                            {
+                                tasks: routine.tasks.map((task) => task.tableData.id === action.payload.taskIndex ?
+                                    // transform the task with a matching taskIndex
+                                    { ...task, done: action.payload.done }
+                                    :
+                                    // otherwise return original task
+                                    task
+                                )
+                            })
+                        :
+                        // otherwise return original routine
+                        routine
+                    ),
+                    routineToShow:
+                        state.routineToShow.id === action.payload.routineIndex ?
+                            Object.assign({}, state.routineToShow,
+                                {
+                                    tasks: state.routineToShow.tasks.map((task) => task.tableData.id === action.payload.taskIndex ?
+                                        // transform the task with a matching taskIndex
+                                        { ...task, done: action.payload.done }
+                                        :
+                                        // otherwise return original task
+                                        task
+                                    )
+                                })
+                            :
+                            // otherwise return original routineToShow
+                            state.routineToShow
+                });
         default:
             return state    //if a other action comes in, return the state as it was passed over and do not change anything
     }

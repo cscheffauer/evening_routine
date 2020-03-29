@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,6 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { setTaskDone } from '../../../actions/actions';
 
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
@@ -38,7 +39,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+        onSetTaskDone: (routineIndex, taskIndex, done) => dispatch(setTaskDone(routineIndex, taskIndex, done)),
     }
 }
 
@@ -71,6 +72,9 @@ const styles = (theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    checkBoxTask: {
+        minWidth: 30,
     },
     typoTaskTimePrim: {
         margin: 'auto 20px auto 0px',
@@ -120,7 +124,7 @@ class TodayPage extends Component {
     }
 
     render() {
-        const { routineToShow, classes, darkMode } = this.props;
+        const { routineToShow, onSetTaskDone, classes, darkMode } = this.props;
 
         const handleOpenBackDrop = () => {
             this.setState({ openBackdrop: true });
@@ -135,10 +139,14 @@ class TodayPage extends Component {
             this.setState({ routineSavedMsgOpen: false });
         }
         const compareTasks = (a, b) => {
-            return Date.parse(a.plannedtime) - Date.parse(b.plannedtime);
+            return (a.done === b.done) ? Date.parse(a.plannedtime) - Date.parse(b.plannedtime)
+                : (a.done && !b.done) ? 1
+                    : (!a.done && b.done) && -1
         }
 
-        const handleTaskDone = () => {
+        const handleTaskDone = (event, taskId, taskDone) => {
+            console.log(event.target.checked);
+            onSetTaskDone(routineToShow.id, taskId, !taskDone)
         }
 
         const getPlannedTimeRenderValue = (plannedtime) => {
@@ -152,7 +160,7 @@ class TodayPage extends Component {
         }
 
         return (
-            <Container className={classes.container}>
+            <Container className={classes.container} >
                 <RoutineDialog openBackdrop={this.state.openBackdrop} handleCloseBackDrop={handleCloseBackDrop} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} fetchRandomGiphy={this.fetchRandomGiphy} showRoutineSavedMsg={showRoutineSavedMsg} />
 
                 <Box className={classes.boxTasks} >
@@ -166,7 +174,8 @@ class TodayPage extends Component {
                             <div className={classes.demo}>
                                 <List>
                                     {routineToShow.tasks.sort((a, b) => compareTasks(a, b)).map(task =>
-                                        <ListItem key={task.tableData.id}>
+                                        <ListItem key={task.tableData.id} disabled={task.done}>
+
                                             <ListItemAvatar>
                                                 <Typography className={darkMode ? classes.typoTaskTimeSec : classes.typoTaskTimePrim} paragraph>
                                                     {getPlannedTimeRenderValue(task.plannedtime)}
@@ -176,19 +185,16 @@ class TodayPage extends Component {
                                                 primary={task.title}
                                                 secondary={task.description}
                                             />
-                                            <ListItemSecondaryAction>
+                                            <ListItemIcon className={classes.checkBoxTask}>
                                                 <Checkbox
                                                     edge="start"
                                                     checked={task.done}
-                                                    onChange={handleTaskDone}
+                                                    onChange={e => handleTaskDone(e, task.tableData.id, task.done)}
                                                     tabIndex={-1}
                                                     disableRipple
                                                     color={darkMode ? "secondary" : "primary"}
                                                 />
-                                                <IconButton edge="end" aria-label="delete">
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </ListItemSecondaryAction>
+                                            </ListItemIcon>
                                         </ListItem>
 
                                     )}
@@ -231,6 +237,7 @@ class TodayPage extends Component {
                         color={darkMode ? "secondary" : "primary"}
                         size="large"
                         className={classes.button}
+                        disabled={routineToShow}
                         onClick={handleOpenBackDrop}
                         startIcon={<PlayCircleOutlineIcon />}
                     >

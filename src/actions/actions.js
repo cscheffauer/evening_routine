@@ -6,6 +6,7 @@ import {
     REMOVE_GOAL,
     SAVE_ROUTINE,
     CALCULATE_ROUTINETOSHOW,
+    CHANGE_TASK_DONE,
 } from '../constants'       //get constants form constants file
 
 
@@ -52,6 +53,12 @@ export const saveRoutine = (routine) => ({
 
 export const calculateRoutineToShow = () => ({
     type: CALCULATE_ROUTINETOSHOW
+})
+
+
+export const setTaskDone = (routineIndex, taskIndex, done) => ({
+    type: CHANGE_TASK_DONE,
+    payload: { routineIndex: routineIndex, taskIndex: taskIndex, done: done }
 })
 
 
