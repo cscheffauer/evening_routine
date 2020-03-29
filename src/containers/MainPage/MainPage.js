@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy, Fragment } from 'react';   //destructuring (instead of React.Component)
+import React, { Component, Suspense, lazy } from 'react';   //destructuring (instead of React.Component)
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 

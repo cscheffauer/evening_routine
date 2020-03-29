@@ -1,35 +1,101 @@
-import React, { Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import ImageLoader from '../../Tools/ImageLoader/ImageLoader';
 
-import './MotivationPage.css';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import LoadingSpinner from '../../../components/Layout/LoadingSpinner/LoadingSpinner';
 
-const MotivationPage = () => {
+import { quotes } from '../../../data';
+
+const imgDimensions = {
+    maxHeight: '50vh',
+    maxWidth: '50vw',
+}
+
+const useStyles = makeStyles(theme => ({
+    container: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        textAlign: 'center',
+        [theme.breakpoints.down('md')]: {
+            height: '80vh',
+        },
+        [theme.breakpoints.up('md')]: {
+            height: 'calc(100vh - (112px))',
+        }
+    },
+    imgQuote: {
+        maxWidth: imgDimensions.maxWidth,
+        maxHeight: imgDimensions.maxHeight,
+    },
+    boxQuote: {
+        marginTop: 20,
+    },
+    typoQuote: {
+        fontSize: "3vh"
+    },
+    typoQuoteAuthor: {
+        fontSize: "2vh"
+    },
+    show: {
+        opacity: 1,
+    },
+    hide: {
+        opacity: 0,
+        width: 0,
+        height: 0,
+    }
+
+}));
+
+const MotivationPage = (props) => {
+    const { darkMode } = props;
+    const classes = useStyles();
+    const [randomQuote, setRandomQuote] = useState({});
+    const [quoteLoaded, setQuoteLoaded] = useState(false);
+
+    const onQuoteLoaded = () => {
+        console.log("set quote loaded to true");
+        setQuoteLoaded(true);
+    }
+    const getRandomQuote = () => {
+        const randomIndex = Math.floor(Math.random() * quotes.motivationQuotes.length);
+        const newRandomQuote = quotes.motivationQuotes[randomIndex];
+        (newRandomQuote !== randomQuote) && setRandomQuote(newRandomQuote);
+    }
+    useEffect(() => {
+        getRandomQuote();
+        setQuoteLoaded(false);
+        console.log("effect - set quote loaded to false");
+    }, []);
+
+
     return (
-        <Fragment>
-            <Typography paragraph>
-                MOTIVATION Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                donec massa sapien faucibus et molestie ac.
-            </Typography>
-            <Typography paragraph>
-                Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-            </Typography>
-        </Fragment>);
+        <Container className={classes.container}>
+            <Box className={quoteLoaded ? classes.show : classes.hide}>
+                <Box className={classes.boxImage}>
+                    <ImageLoader
+                        src={randomQuote.imageUrl}
+                        className={classes.imgQuote}
+                        onQuoteLoaded={onQuoteLoaded}
+                    />
+                </Box>
+                <Box className={classes.boxQuote}>
+                    <Typography className={classes.typoQuote}>
+                        "{randomQuote.quote}"
+                    </Typography>
+                    <Typography className={classes.typoQuoteAuthor}>
+                        {randomQuote.author}
+                    </Typography>
+                </Box>
+            </Box>
+            <LoadingSpinner className={quoteLoaded ? classes.hide : classes.show} />
+        </Container>);
 }
 
 export default MotivationPage;
+
+

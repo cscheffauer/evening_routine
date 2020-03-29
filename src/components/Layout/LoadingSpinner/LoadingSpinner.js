@@ -3,9 +3,10 @@ import React from 'react'
 import './LoadingSpinner.css';
 
 
-const LoadingSpinner = () => {
+const LoadingSpinner = (props) => {
+    const { className } = props;
     return (
-        <div className="loadingContainer">
+        <div className={`${className} "loadingContainer"`}>
             <div className="circleLoading"></div>
         </div>
     );
