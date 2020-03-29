@@ -244,7 +244,7 @@ const calculateRoutineToShow = (routines) => {
 
 
 export const changeRoutines = (state = initialRoutines, action = {}) => {
-    const routineToShow = {};
+    var routineToShow = {};
     switch (action.type) {
         case SAVE_ROUTINE:       //if a ADD_GOAL action comes in, the new goal will added to the existing goals
             const newRoutines = [...state.routines, action.payload];

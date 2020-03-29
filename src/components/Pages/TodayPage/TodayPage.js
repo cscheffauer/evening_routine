@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import RoutineDialog from './RoutineDialog';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -20,7 +21,7 @@ const mapStateToProps = state => {
     return {
         darkMode: state.changeDarkMode.darkMode,
         goals: state.changeGoals.goals,
-        routines: state.changeRoutines.routines,                    // -''-
+        routineToShow: state.changeRoutines.routineToShow,                    // -''-
     }
 }
 
@@ -64,6 +65,9 @@ const styles = (theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
     },
+    recapTextField: {
+        marginTop: 20,
+    }
 
 }));
 
@@ -78,7 +82,6 @@ class TodayPage extends Component {
             routineSavedMsgOpen: false,
             randomGiphyCatURL: '',
             randomGiphySleepURL: '',
-            routineToShow: {},
         }
     }
 
@@ -93,7 +96,7 @@ class TodayPage extends Component {
     }
 
     render() {
-        const { routines, classes, darkMode } = this.props;
+        const { routineToShow, classes, darkMode } = this.props;
 
         const handleOpenBackDrop = () => {
             this.setState({ openBackdrop: true });
@@ -143,19 +146,21 @@ class TodayPage extends Component {
                         </Typography>
                     </Box>
                     {
-                        /*<Grid className={classes.root} item xs={12}>
-                        <Grid container justify="center" spacing={3}>
-                            {goals.map((goal, index) => (
-                                <Grid key={index} item>
-                                    <GoalCard goal={goal} index={index} openEditGoalDialog={openEditGoalDialog} handleRemove={handleRemove} darkMode={darkMode} />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Grid>
-                        :*/
-                        <Typography className={classes.centerTypo} paragraph>
-                            No recap found.
-                        </Typography>
+                        routineToShow.recap ?
+                            <TextField
+                                className={classes.recapTextField}
+                                multiline
+                                defaultValue="No recap done - try to write some sentences and notes on your daily recap to ensure you are letting go of your day."
+                                value={routineToShow.recap}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="outlined"
+                            />
+                            :
+                            <Typography className={classes.centerTypo} paragraph>
+                                No recap found.
+                            </Typography>
                     }
                 </Box>
 
