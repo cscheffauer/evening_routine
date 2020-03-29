@@ -22,6 +22,13 @@ import { setTaskDone } from '../../../actions/actions';
 
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
+function isObjectEmpty(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -169,35 +176,33 @@ class TodayPage extends Component {
                     </Box>
                     {
                         routineToShow.tasks ?
-                            <div className={classes.demo}>
-                                <List>
-                                    {routineToShow.tasks.sort((a, b) => compareTasks(a, b)).map(task =>
-                                        <ListItem key={task.tableData.id} disabled={task.done}>
+                            <List>
+                                {routineToShow.tasks.sort((a, b) => compareTasks(a, b)).map(task =>
+                                    <ListItem key={task.tableData.id} disabled={task.done}>
 
-                                            <ListItemAvatar>
-                                                <Typography className={darkMode ? classes.typoTaskTimeSec : classes.typoTaskTimePrim} paragraph>
-                                                    {getPlannedTimeRenderValue(task.plannedtime)}
-                                                </Typography>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={task.title}
-                                                secondary={task.description}
+                                        <ListItemAvatar>
+                                            <Typography className={darkMode ? classes.typoTaskTimeSec : classes.typoTaskTimePrim} paragraph>
+                                                {getPlannedTimeRenderValue(task.plannedtime)}
+                                            </Typography>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={task.title}
+                                            secondary={task.description}
+                                        />
+                                        <ListItemIcon className={classes.checkBoxTask}>
+                                            <Checkbox
+                                                edge="start"
+                                                checked={task.done}
+                                                onChange={e => handleTaskDone(e, task.tableData.id, task.done)}
+                                                tabIndex={-1}
+                                                disableRipple
+                                                color={darkMode ? "secondary" : "primary"}
                                             />
-                                            <ListItemIcon className={classes.checkBoxTask}>
-                                                <Checkbox
-                                                    edge="start"
-                                                    checked={task.done}
-                                                    onChange={e => handleTaskDone(e, task.tableData.id, task.done)}
-                                                    tabIndex={-1}
-                                                    disableRipple
-                                                    color={darkMode ? "secondary" : "primary"}
-                                                />
-                                            </ListItemIcon>
-                                        </ListItem>
+                                        </ListItemIcon>
+                                    </ListItem>
 
-                                    )}
-                                </List>
-                            </div>
+                                )}
+                            </List>
                             :
                             <Typography className={classes.centerTypo} paragraph>
                                 No important tasks scheduled for today.
@@ -228,14 +233,13 @@ class TodayPage extends Component {
                             </Typography>
                     }
                 </Box>
-
                 <Box className={classes.boxButton}>
                     <Button
                         variant="contained"
                         color={darkMode ? "secondary" : "primary"}
                         size="large"
                         className={classes.button}
-                        disabled={routineToShow}
+                        disabled={!isObjectEmpty(routineToShow)}
                         onClick={handleOpenBackDrop}
                         startIcon={<PlayCircleOutlineIcon />}
                     >
@@ -255,7 +259,7 @@ class TodayPage extends Component {
                         Evening routine has been saved!
                     </Alert>
                 </Snackbar>
-            </Container >);
+            </Container>);
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(TodayPage)));
