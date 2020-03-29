@@ -52,13 +52,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MotivationPage = (props) => {
-    const { darkMode } = props;
     const classes = useStyles();
     const [randomQuote, setRandomQuote] = useState({});
     const [quoteLoaded, setQuoteLoaded] = useState(false);
 
     const onQuoteLoaded = () => {
-        console.log("set quote loaded to true");
         setQuoteLoaded(true);
     }
     const getRandomQuote = () => {
@@ -69,7 +67,6 @@ const MotivationPage = (props) => {
     useEffect(() => {
         getRandomQuote();
         setQuoteLoaded(false);
-        console.log("effect - set quote loaded to false");
     }, []);
 
 

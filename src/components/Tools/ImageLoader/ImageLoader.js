@@ -10,9 +10,10 @@ class ImageLoader extends Component {
         this.props.onQuoteLoaded();
     };
     render() {
-        let { className, classes, ...props } = this.props;
+        let { className } = this.props;
 
         return <img
+            alt="quoteImage"
             src={this.props.src}
             className={className}
             onLoad={this.onLoad} />

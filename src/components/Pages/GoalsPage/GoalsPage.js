@@ -133,7 +133,7 @@ const GoalsPage = (props) => {
                     :
                     !options.hideTitle ?
                         <Box className={classes.boxNoGoals}>
-                            <img className={classes.imgNoGoals} src="/images/goals/noGoals.png" />
+                            <img alt="noGoalsImage" className={classes.imgNoGoals} src="/images/goals/noGoals.png" />
                             <Typography className={classes.typoNoGoals} paragraph>
                                 {options.noGoalsMessage}
                             </Typography>

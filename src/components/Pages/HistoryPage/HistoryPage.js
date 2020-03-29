@@ -122,15 +122,17 @@ const HistoryPage = (props) => {
         <Container>
             <List>
                 {routines.sort((a, b) => compareRoutines(a, b)).map(routine =>
-                    <>
-                        <ListItem className={classes.listRoutine} button onClick={(e) => handleExpandRoutine(routine.id)} key={routine.id} >
+                    <Box key={routine.id} >
+                        <ListItem className={classes.listRoutine} button onClick={(e) => handleExpandRoutine(routine.id)} >
                             <ListItemAvatar className={darkMode ? classes.typoRoutineFrontSec : classes.typoRoutineFrontPrim}>
-                                <Typography className={classes.typoRoutineWeekDay}>
-                                    {getWeekDayRenderValue(routine.createdAt)}
-                                </Typography>
-                                <Typography className={classes.typoRoutineDate}>
-                                    {getDateRenderValue(routine.createdAt)}
-                                </Typography>
+                                <>
+                                    <Typography className={classes.typoRoutineWeekDay}>
+                                        {getWeekDayRenderValue(routine.createdAt)}
+                                    </Typography>
+                                    <Typography className={classes.typoRoutineDate}>
+                                        {getDateRenderValue(routine.createdAt)}
+                                    </Typography>
+                                </>
                             </ListItemAvatar>
                             <ListItemText
                                 primary={routine.tasks.filter(task => (task.done === true)).length + " of " + routine.tasks.length + " tasks completed"}
@@ -140,11 +142,11 @@ const HistoryPage = (props) => {
                         <Collapse in={open.anyOpen && (open.id === routine.id)} timeout="auto" unmountOnExit>
                             <CollapseRoutineContent routine={routine} />
                         </Collapse>
-                    </>
+                    </Box>
                 )}
             </List>
 
-        </Container>);
+        </Container >);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoryPage);
