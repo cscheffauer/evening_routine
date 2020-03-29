@@ -116,6 +116,40 @@ export const changeGoals = (state = initialGoals, action = {}) => {
 const initialRoutines = {
     routines: [
         {
+            recap: 'Gestern haben wir voll was tolles gemacht \n test \n nd mehr',
+            tasks: [
+                {
+                    title: 'Essen',
+                    description: 'voigeil was essen',
+                    tableData: {
+                        id: 0
+                    }
+                },
+                {
+                    title: 'Coding',
+                    description: 'voigeil was coden',
+                    tableData: {
+                        id: 1
+                    }
+                },
+                {
+                    title: 'Kochen',
+                    description: 'voigeil was kochen',
+                    tableData: {
+                        id: 2
+                    }
+                }
+            ],
+            goals: [
+                {
+                    title: 'asdf',
+                    description: 'asdf',
+                    category: 'Educational'
+                }
+            ],
+            createdAt: 'Sat Mar 28 2020 23:24:34 GMT+0100 (Central European Standard Time)'
+        },
+        {
             recap: 'am 22....',
             tasks: [
                 {

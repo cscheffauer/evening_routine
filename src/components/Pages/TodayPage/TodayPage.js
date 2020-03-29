@@ -9,6 +9,14 @@ import RoutineDialog from './RoutineDialog';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -123,18 +131,35 @@ class TodayPage extends Component {
                         </Typography>
                     </Box>
                     {
-                        /*<Grid className={classes.root} item xs={12}>
-                        <Grid container justify="center" spacing={3}>
-                            {goals.map((goal, index) => (
-                                <Grid key={index} item>
-                                    <GoalCard goal={goal} index={index} openEditGoalDialog={openEditGoalDialog} handleRemove={handleRemove} darkMode={darkMode} />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Grid>
-                        :*/
-                        <Typography className={classes.centerTypo} paragraph>
-                            No important tasks scheduled for today.
+                        routineToShow.tasks ?
+                            <div className={classes.demo}>
+                                <List>
+                                    {routineToShow.tasks.forEach(task =>
+                                        <ListItem>
+                                            <ListItemAvatar>
+                                                <Typography className={classes.centerTypo} paragraph>
+                                                    18:00
+                                                </Typography>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={task.title}
+                                                secondary={'Secondary text'}
+                                            />
+                                            <ListItemSecondaryAction>
+                                                <IconButton edge="end" aria-label="delete">
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                                <IconButton edge="end" aria-label="delete">
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    )}
+                                </List>
+                            </div>
+                            :
+                            <Typography className={classes.centerTypo} paragraph>
+                                No important tasks scheduled for today.
                         </Typography>
                     }
                 </Box>
@@ -150,7 +175,6 @@ class TodayPage extends Component {
                             <TextField
                                 className={classes.recapTextField}
                                 multiline
-                                defaultValue="No recap done - try to write some sentences and notes on your daily recap to ensure you are letting go of your day."
                                 value={routineToShow.recap}
                                 InputProps={{
                                     readOnly: true,
