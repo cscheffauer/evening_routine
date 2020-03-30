@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'row',
         flexWrap: 'nowrap',
         justifyContent: 'space-between',
+        backgroundColor: theme.palette.background.paper,
     },
     typoRoutineFrontPrim: {
         margin: 'auto 30px auto 0px',
@@ -140,7 +141,7 @@ const HistoryPage = (props) => {
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
                         <Collapse in={open.anyOpen && (open.id === routine.id)} timeout="auto" unmountOnExit>
-                            <CollapseRoutineContent routine={routine} />
+                            <CollapseRoutineContent routine={routine} darkMode={darkMode} />
                         </Collapse>
                     </Box>
                 )}
