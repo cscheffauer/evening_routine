@@ -147,7 +147,7 @@ const HistoryPage = (props) => {
                 )}
             </List>
 
-        </Container >);
+        </Container>);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoryPage);
