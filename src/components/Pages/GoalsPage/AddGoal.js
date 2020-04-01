@@ -101,7 +101,7 @@ class AddGoal extends Component {
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={(e) => handleAdd(e, this.state.newGoal)} color="primary">
+                        <Button disabled={!(this.state.newGoal.title !== '' && this.state.newGoal.description !== '')} onClick={(e) => handleAdd(e, this.state.newGoal)} color="primary">
                             Add
                         </Button>
                     </DialogActions>

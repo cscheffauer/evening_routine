@@ -130,6 +130,7 @@ class RoutineDialog extends Component {
         };
         const disableNext = () => {
             return (this.state.activeStep === maxSteps - 1)
+                || (this.state.activeStep === 1 && (this.state.recapText === INITIAL_RECAP_TEXT || this.state.recapText === ''))
                 || (this.state.activeStep === 2 && goals.length === 0)
                 || (this.state.activeStep === 3 && this.state.tasksToBeSaved.length < 3)
         }

@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react'
-import MaterialTable from 'material-table';
+import MaterialTable, { MTableAction } from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -18,6 +18,9 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
+import Tooltip from '@material-ui/core/Tooltip';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
@@ -57,7 +60,6 @@ const TasksTable = (props) => {
         }
     }
 
-
     const [tasksTableState, setTasksTableState] = useState({
         columns: [
 
@@ -70,7 +72,9 @@ const TasksTable = (props) => {
                         placeholder='Description'
                         fullWidth={true}
                         multiline={true}
-                        onChange={e => props.onChange(e.target.value)}
+                        onChange={e => {
+                            props.onChange(e.target.value)
+                        }}
                         InputProps={{
                             style: {
                                 fontSize: 13,
@@ -116,6 +120,12 @@ const TasksTable = (props) => {
     }, [tasksTableState]);
 
 
+    const handleSave = (event, props) => {
+        console.log(props);
+        props.action.onClick(event, props.data);
+
+    }
+
     return (
         <MaterialTable
             style={{
@@ -130,6 +140,31 @@ const TasksTable = (props) => {
             title="Your tasks for tomorrow"
             columns={tasksTableState.columns}
             data={tasksTableState.data}
+            components={{
+                Action:
+                    (props) => {
+                        if (props.action.tooltip === "Save") {
+                            return (
+                                <Tooltip title={props.action.tooltip}>
+                                    <IconButton
+                                        onClick={(event) => handleSave(event, props)}>
+                                        {typeof props.action.icon === "string" ? (
+                                            <Icon {...props.action.iconProps}>{props.action.icon}</Icon>
+                                        ) : typeof props.action.icon === "function" ? (
+                                            props.action.icon({ ...props.action.iconProps, disabled: false })
+                                        ) : (<props.action.icon />)}
+                                    </IconButton>
+                                </Tooltip>
+                            )
+                        }
+                        else {
+                            return <MTableAction {...props} />
+                        }
+
+
+                    }
+
+            }}
             options={{
                 filtering: false,
                 search: false,

@@ -102,7 +102,7 @@ class EditGoalDialog extends Component {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                         </Button>
-                    <Button onClick={(e) => handleEdit(e, this.state.goalToBeEdited, index)} color="primary">
+                    <Button disabled={!(this.state.goalToBeEdited.title !== '' && this.state.goalToBeEdited.description !== '')} onClick={(e) => handleEdit(e, this.state.goalToBeEdited, index)} color="primary">
                         Save
                         </Button>
                 </DialogActions>
