@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import TextField from '@material-ui/core/TextField';
 
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
@@ -32,6 +33,18 @@ const useStyles = makeStyles(theme => ({
         fontSize: '1.5rem',
         borderRight: '3px #FBA435 solid',
     },
+    listItemRecap: {
+        flexDirection: 'column',
+        marginBottom: 10,
+    },
+    subheaderRecap: {
+        width: '100%',
+    },
+    textFieldRecap: {
+        marginTop: 10,
+        width: '100%',
+    }
+
 }));
 
 const CollapseRoutineContent = (props) => {
@@ -61,7 +74,7 @@ const CollapseRoutineContent = (props) => {
                             className={classes.listTasks}
                             subheader={
                                 <ListSubheader component="div" id="nested-list-subheader">
-                                    Tasks
+                                    Important tasks for the next day:
                                 </ListSubheader>
                             }>
                             {routine.tasks.sort((a, b) => compareTasks(a, b)).map(task =>
@@ -92,15 +105,29 @@ const CollapseRoutineContent = (props) => {
                         </List>
                         :
                         <Typography className={classes.centerTypo} paragraph>
-                            No important tasks scheduled for today.
+                            No tasks scheduled at this day.
                         </Typography>
                 }
             </ListItem>
-            <ListItem className={classes.nested}>
-                Recap
-            </ListItem>
-            <ListItem className={classes.nested}>
-                Goals
+            <ListItem className={classes.listItemRecap}>
+
+                <ListSubheader className={classes.subheaderRecap}>Recap of that day:</ListSubheader>
+
+                {routine.recap ?
+                    <TextField
+                        className={classes.textFieldRecap}
+                        multiline
+                        value={routine.recap}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="outlined"
+                    />
+                    :
+                    <Typography className={classes.centerTypo} paragraph>
+                        No recap done at this day.
+                        </Typography>
+                }
             </ListItem>
         </List>
     )
