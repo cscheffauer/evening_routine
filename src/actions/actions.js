@@ -7,6 +7,7 @@ import {
     SAVE_ROUTINE,
     CALCULATE_ROUTINETOSHOW,
     CHANGE_TASK_DONE,
+    CHANGE_PAGE_VISITED,
 } from '../constants'       //get constants form constants file
 
 
@@ -59,6 +60,12 @@ export const calculateRoutineToShow = () => ({
 export const setTaskDone = (routineIndex, taskIndex, done) => ({
     type: CHANGE_TASK_DONE,
     payload: { routineIndex: routineIndex, taskIndex: taskIndex, done: done }
+})
+
+
+export const setPageVisited = (ROUTE, visited) => ({
+    type: CHANGE_PAGE_VISITED,
+    payload: { route: ROUTE, visited: visited }
 })
 
 

@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Box from '@material-ui/core/Box';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -66,8 +67,8 @@ const CollapseRoutineContent = (props) => {
     }
 
     return (
-        <List component="div" disablePadding>
-            <ListItem>
+        <>
+            <Box>
                 {
                     routine.tasks ?
                         <List
@@ -108,8 +109,8 @@ const CollapseRoutineContent = (props) => {
                             No tasks scheduled at this day.
                         </Typography>
                 }
-            </ListItem>
-            <ListItem className={classes.listItemRecap}>
+            </Box>
+            <Box className={classes.listItemRecap}>
 
                 <ListSubheader className={classes.subheaderRecap}>Recap of that day:</ListSubheader>
 
@@ -128,8 +129,8 @@ const CollapseRoutineContent = (props) => {
                         No recap done at this day.
                         </Typography>
                 }
-            </ListItem>
-        </List>
+            </Box>
+        </>
     )
 }
 

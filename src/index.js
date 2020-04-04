@@ -10,12 +10,12 @@ import 'typeface-roboto';
 import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
-import { changeRoute, changeDarkMode, changeGoals, changeRoutines } from './reducers/reducers';
+import { changeRoute, changeDarkMode, changeGoals, changeRoutines, changePageVisited } from './reducers/reducers';
 
 import Theme from './components/Theme/Theme';
 
 const logger = createLogger();
-const rootReducer = combineReducers({ changeRoute, changeDarkMode, changeGoals, changeRoutines });       //combine the reducers from the reducers file into one root reducer
+const rootReducer = combineReducers({ changeRoute, changeDarkMode, changeGoals, changeRoutines, changePageVisited });       //combine the reducers from the reducers file into one root reducer
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware, logger)));
 //to create the store with the root reducer and apply the thunkMiddleware and the logger to the store
 

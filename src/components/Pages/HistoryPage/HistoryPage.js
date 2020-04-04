@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,15 +15,20 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import CollapseRoutineContent from './collapseRoutineContent';
 
+import { setPageVisited } from '../../../actions/actions'
+import { HISTORY_ROUTE } from '../../../constants';
+
 const mapStateToProps = state => {
     return {
         darkMode: state.changeDarkMode.darkMode,
-        routines: state.changeRoutines.routines,                    // -''-
+        routines: state.changeRoutines.routines,
+        pagesVisited: state.changePageVisited.pagesVisited                    // -''-
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onChangePageVisited: (ROUTE, visited) => dispatch(setPageVisited(ROUTE, visited)),
     }
 }
 
@@ -65,13 +71,22 @@ const useStyles = makeStyles(theme => ({
     },
     typoRoutineDate: {
         fontSize: '1rem',
+    },
+    collapseInnerContent: {
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: '5vw'
+        },
+
     }
 }));
 
 const HistoryPage = (props) => {
-    const { darkMode, routines } = props;
+    const { darkMode, routines, pagesVisited, onChangePageVisited } = props;
+    const historyPageVisited = pagesVisited.filter(page => page.route === HISTORY_ROUTE)[0].visited;
+
     const classes = useStyles();
     const [open, setOpen] = React.useState({ anyOpen: false, id: undefined });
+    const [historySnackBarOpen, setHistorySnackBarOpen] = React.useState(false);
 
     const handleExpandRoutine = (routineId) => {
         (open.id === routineId) ?
@@ -119,6 +134,16 @@ const HistoryPage = (props) => {
         return dateString;
     }
 
+    useEffect(() => {
+        if (!historyPageVisited) {
+            const timer = setTimeout(() => {
+                setHistorySnackBarOpen(true);
+                onChangePageVisited(HISTORY_ROUTE, true);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [historyPageVisited])
+
     return (
         <Container>
             <List>
@@ -140,12 +165,23 @@ const HistoryPage = (props) => {
                             />
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
-                        <Collapse in={open.anyOpen && (open.id === routine.id)} timeout="auto" unmountOnExit>
+                        <Collapse className={classes.collapseInnerContent} in={open.anyOpen && (open.id === routine.id)} timeout="auto" unmountOnExit>
                             <CollapseRoutineContent routine={routine} darkMode={darkMode} />
                         </Collapse>
                     </Box>
                 )}
             </List>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                key={`right,bottom`}
+                open={historySnackBarOpen}
+                message={`Be aware that this is just dummy data. An option to sign up and save your evening routines will be implemented soon!`}
+                autoHideDuration={12000}
+                onClose={() => setHistorySnackBarOpen(false)}
+            />
 
         </Container>);
 }

@@ -8,6 +8,8 @@ import {
     SAVE_ROUTINE,
     CALCULATE_ROUTINETOSHOW,
     CHANGE_TASK_DONE,
+    CHANGE_PAGE_VISITED,
+    HISTORY_ROUTE
 } from '../constants'       //get constants form constants file
 
 //import { getSunrise, getSunset } from 'sunrise-sunset-js';    //imports for sunrise, sunset calculcation
@@ -370,3 +372,28 @@ export const changeRoutines = (state = initialRoutines, action = {}) => {
     }
 }
 
+
+const initialPagesVisited = {
+    pagesVisited: [
+        {
+            route: HISTORY_ROUTE,
+            visited: false
+        }
+    ]
+}
+
+export const changePageVisited = (state = initialPagesVisited, action = {}) => {
+    switch (action.type) {
+        case CHANGE_PAGE_VISITED:
+            return Object.assign({}, state,
+                {
+                    pagesVisited: state.pagesVisited.map((page) => page.route === action.payload.route ?
+                        { ...page, visited: action.payload.visited }
+                        :
+                        page
+                    )
+                })
+        default:
+            return state
+    }
+}
