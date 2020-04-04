@@ -164,6 +164,18 @@ class TodayPage extends Component {
             }
         }
 
+        const getYourTasksLabel = (LabelType) => {
+            var midnight = new Date(new Date().toDateString());
+            var tonight = new Date(new Date().toDateString());
+            tonight.setDate(midnight.getDate() + 1);
+            var returnValue = "today";
+            returnValue =
+                (LabelType === "Tasks") ? ((Date.parse(tonight) > Date.parse(routineToShow.createdAt)) ? "tomorrow" : "today") :
+                    (LabelType === "Recap") ? ((Date.parse(tonight) > Date.parse(routineToShow.createdAt)) ? "today" : "yesterday") :
+                        "today"
+            return returnValue;
+        }
+
         return (
             <Container className={classes.container} >
                 <RoutineDialog openBackdrop={this.state.openBackdrop} handleCloseBackDrop={handleCloseBackDrop} randomGiphyCatURL={this.state.randomGiphyCatURL} randomGiphySleepURL={this.state.randomGiphySleepURL} fetchRandomGiphy={this.fetchRandomGiphy} showRoutineSavedMsg={showRoutineSavedMsg} />
@@ -171,7 +183,14 @@ class TodayPage extends Component {
                 <Box className={classes.boxTasks} >
                     <Box>
                         <Typography className={classes.centerTypo} variant="h4">
-                            Your tasks for today
+                            {routineToShow.tasks ?
+                                (
+                                    "Your tasks for " + getYourTasksLabel("Tasks")
+                                )
+                                :
+                                "Your tasks"
+                            }
+
                         </Typography>
                     </Box>
                     {
@@ -205,7 +224,7 @@ class TodayPage extends Component {
                             </List>
                             :
                             <Typography className={classes.centerTypo} paragraph>
-                                No important tasks scheduled for today.
+                                No important tasks scheduled.
                         </Typography>
                     }
                 </Box>
@@ -213,7 +232,13 @@ class TodayPage extends Component {
                 <Box className={classes.boxRecap} >
                     <Box>
                         <Typography className={classes.centerTypo} variant="h4">
-                            Your recap of yesterday
+                            {routineToShow.tasks ?
+                                (
+                                    "Your recap of " + getYourTasksLabel("Recap")
+                                )
+                                :
+                                "Your recap"
+                            }
                         </Typography>
                     </Box>
                     {

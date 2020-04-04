@@ -118,7 +118,7 @@ const initialRoutines = {
     routines: [
         {
             id: 0,
-            recap: 'Yesterday I figured out how to build nice new stuff in React \nMore text here \nand even more here....',
+            recap: 'I figured out how to build nice new stuff in React \nMore text here \nand even more here....',
             tasks: [
                 {
                     title: 'Having lunch',
@@ -127,7 +127,7 @@ const initialRoutines = {
                     tableData: {
                         id: 0
                     },
-                    done: false,
+                    done: true,
                 },
                 {
                     title: 'Coding',
@@ -136,11 +136,11 @@ const initialRoutines = {
                     tableData: {
                         id: 1
                     },
-                    done: false,
+                    done: true,
                 },
                 {
                     title: 'Sleeping',
-                    description: 'having a power nap',
+                    description: 'having a power nap in the afternoon',
                     plannedtime: '2020-03-29T13:00:19.238Z',
                     tableData: {
                         id: 2
@@ -159,29 +159,35 @@ const initialRoutines = {
         },
         {
             id: 1,
-            recap: 'am 22....',
+            recap: 'I managed to complete my project - this made my really happy and excited to finish my other projects as well. Motivation is back 🤘',
             tasks: [
                 {
-                    title: 'asdf',
+                    title: 'Having lunch',
+                    description: 'eat something nice',
+                    plannedtime: '2020-03-29T10:00:19.238Z',
                     tableData: {
                         id: 0
                     },
                     done: true,
                 },
                 {
-                    title: 'asdf',
+                    title: 'Coding',
+                    description: 'more coding :)',
+                    plannedtime: '2020-03-29T16:00:19.238Z',
                     tableData: {
                         id: 1
                     },
                     done: true,
                 },
                 {
-                    title: 'asdf',
+                    title: 'Staying at home',
+                    description: 'staying at home - fighting Corona 🦠',
+                    plannedtime: '2020-03-29T13:00:19.238Z',
                     tableData: {
                         id: 2
                     },
                     done: true,
-                }
+                },
             ],
             goals: [
                 {
@@ -194,26 +200,35 @@ const initialRoutines = {
         },
         {
             id: 2,
-            recap: 'am 24....',
+            recap: 'This new book I start is awesome - will continue to read it tomorrow! \nMore text here \nand even more here....',
             tasks: [
                 {
-                    title: 'asdf',
+                    title: 'Having lunch',
+                    description: 'eat something nice',
+                    plannedtime: '2020-03-29T10:00:19.238Z',
                     tableData: {
                         id: 0
-                    }
+                    },
+                    done: true,
                 },
                 {
-                    title: 'asdf',
+                    title: 'Reading',
+                    description: 'reading this new book I bought',
+                    plannedtime: '2020-03-29T16:00:19.238Z',
                     tableData: {
                         id: 1
-                    }
+                    },
+                    done: true,
                 },
                 {
-                    title: 'asdf',
+                    title: 'Running',
+                    description: 'Time for a run - staying healthy 🏃🏼‍♂️',
+                    plannedtime: '2020-03-29T13:00:19.238Z',
                     tableData: {
                         id: 2
-                    }
-                }
+                    },
+                    done: true,
+                },
             ],
             goals: [
                 {
@@ -226,26 +241,35 @@ const initialRoutines = {
         },
         {
             id: 3,
-            recap: 'am 23....',
+            recap: 'Today was pretty successful for me - I worked on my new React Project called Evening Routine. \nMore text here \nand even more here....',
             tasks: [
                 {
-                    title: 'asdf',
+                    title: 'Having lunch',
+                    description: 'eat something nice',
+                    plannedtime: '2020-03-29T10:00:19.238Z',
                     tableData: {
                         id: 0
-                    }
+                    },
+                    done: true,
                 },
                 {
-                    title: 'asdf',
+                    title: 'Reading',
+                    description: 'reading this new book I bought',
+                    plannedtime: '2020-03-29T16:00:19.238Z',
                     tableData: {
                         id: 1
-                    }
+                    },
+                    done: true,
                 },
                 {
-                    title: 'asdf',
+                    title: 'Stay home',
+                    description: 'Staying at home - fighting Corona',
+                    plannedtime: '2020-03-29T13:00:19.238Z',
                     tableData: {
                         id: 2
-                    }
-                }
+                    },
+                    done: true,
+                },
             ],
             goals: [
                 {

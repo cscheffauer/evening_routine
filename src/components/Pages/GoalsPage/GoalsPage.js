@@ -115,7 +115,7 @@ const GoalsPage = (props) => {
             {!options.hideTitle &&
                 <Box>
                     <Typography className={classes.centerTypo} variant="h4">
-                        Your goals
+                        Your personal goals
                         </Typography>
                 </Box>
             }
@@ -133,7 +133,7 @@ const GoalsPage = (props) => {
                     :
                     !options.hideTitle ?
                         <Box className={classes.boxNoGoals}>
-                            <img alt="noGoalsImage" className={classes.imgNoGoals} src="/images/goals/noGoals.png" />
+                            <img alt="noGoalsImage" className={classes.imgNoGoals} src={`/images/goals/` + (darkMode ? `noGoals_dark` : `noGoals`) + `.png`} />
                             <Typography className={classes.typoNoGoals} paragraph>
                                 {options.noGoalsMessage}
                             </Typography>
