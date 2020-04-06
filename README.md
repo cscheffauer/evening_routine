@@ -4,7 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/cscheffauer/evening_routine)
 ![GitHub issues](https://img.shields.io/github/issues-raw/cscheffauer/evening_routine)
 
-## [Demo](https://cscheffauer.github.io/eveningroutine)
+## [Demo](https://cscheffauer.github.io/evening_routine)
 
  End the day the right way with this Evening Routine App. 😴 🔜 🛌
 
