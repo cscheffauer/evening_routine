@@ -95,8 +95,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = ({ onRouteChange, onDarkModeChange, darkMode, goalsSet }) => {
-    //const { container } = props;
-    goalsSet = true;    //for testing purpose
+
+    //goalsSet = true;    //for testing purpose
 
     const classes = useStyles();
     const theme = useTheme();
