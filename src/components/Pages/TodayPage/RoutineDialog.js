@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { withStyles, withTheme } from '@material-ui/core/styles';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 import StepContent from './StepContent';
 
@@ -61,6 +62,10 @@ const styles = (theme => ({
     },
     containerRoutine: {
         maxWidth: 1200,
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 0,
+            paddingRight: 0,
+        },
     },
     paperRoutine: {
         height: '90vh',
@@ -74,7 +79,13 @@ const styles = (theme => ({
         paddingBottom: 24,
         display: 'flex',
         flexFlow: 'column wrap',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 10,
+            paddingBottom: 12,
+            paddingLeft: 12,
+            paddingRight: 12,
+        },
     },
     progress: {
         height: 10,
@@ -82,12 +93,20 @@ const styles = (theme => ({
     },
     buttonSaveCloseRoutine: {
         float: 'right',
-        marginLeft: 20
+        marginLeft: 20,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '2vh',
+        }
     },
     boxButtonSaveClose: {
         paddingBottom: 24,
+
         [theme.breakpoints.down('sm')]: {
             paddingRight: 16,
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: 12,
+            paddingBottom: 12,
         },
         [theme.breakpoints.up('sm')]: {
             paddingRight: 24,
@@ -178,13 +197,13 @@ class RoutineDialog extends Component {
                                 activeStep={this.state.activeStep}
                                 classes={{ progress: classes.progress }}    //to get the inner "progress" class of the MobileStepper 
                                 nextButton={
-                                    <Button style={{ fontSize: '1rem' }} size="large" onClick={handleNext} disabled={disableNext()} >
+                                    <Button style={{ fontSize: isWidthUp('sm', this.props.width) ? "1rem" : "0.8rem" }} size="large" onClick={handleNext} disabled={disableNext()} >
                                         Next
                                 {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                                     </Button>
                                 }
                                 backButton={
-                                    <Button style={{ fontSize: '1rem' }} size="large" onClick={handleBack} disabled={this.state.activeStep === 0}>
+                                    <Button style={{ fontSize: isWidthUp('sm', this.props.width) ? "1rem" : "0.8rem" }} size="large" onClick={handleBack} disabled={this.state.activeStep === 0}>
                                         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                                     Back
                             </Button>

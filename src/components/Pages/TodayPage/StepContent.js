@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 import TextField from '@material-ui/core/TextField';
 
@@ -40,6 +41,11 @@ const styles = theme => ({
         marginTop: 24,
         marginBottom: 24,
         fontSize: 20,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 6,
+            marginBottom: 6,
+            fontSize: '2vh',
+        },
     },
     boxStepperContent: {
         flexGrow: 1,
@@ -47,6 +53,9 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: '1vh',
+        }
     },
     boxGiphy: {
         flexGrow: 1,
@@ -57,6 +66,9 @@ const styles = theme => ({
     },
     buttonShuffleGiphy: {
         marginBottom: 28,
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: 12,
+        },
     },
     boxGiphyImage: {
         display: 'flex',
@@ -65,6 +77,9 @@ const styles = theme => ({
         flexDirection: 'column',
         width: '60vw',
         maxWidth: 900,
+        [theme.breakpoints.down('sm')]: {
+            width: '80vw',
+        },
     },
     giphy: {
         height: '90%',
@@ -136,12 +151,11 @@ const getMaxRows = (height) => {
     if (height > 1100) return 26
     if (height > 1000) return 22
     if (height > 900) return 18
-    if (height > 820) return 14
-    if (height > 750) return 10
-    if (height > 700) return 7
-    if (height > 630) return 5
-    if (height > 580) return 3
-    return 1
+    if (height > 820) return 16
+    if (height > 769) return 14
+    if (height > 668) return 12
+    if (height > 580) return 10
+    return 7
 }
 
 
@@ -184,7 +198,7 @@ class StepContent extends Component {
         return (
             <>
                 <Paper square elevation={0} className={classes.headerStepper}>
-                    <Typography variant="h4">{routineSteps[activeStep].label}</Typography>
+                    <Typography variant={isWidthUp('sm', this.props.width) ? "h4" : "h6"}>{routineSteps[activeStep].label}</Typography>
                 </Paper>
                 {
                     routineSteps[activeStep].description

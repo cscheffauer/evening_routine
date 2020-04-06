@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import GoalCard from './GoalCard';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 import AddGoal from './AddGoal';
 import EditGoal from './EditGoal';
@@ -44,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     },
     imgNoGoals: {
         width: '55vh',
+        [theme.breakpoints.down('sm')]: {
+            width: '35vh',
+        },
         margin: '0 auto',
     },
     typoNoGoals: {
@@ -114,7 +118,7 @@ const GoalsPage = (props) => {
         <Container className={!options.hideTitle ? classes.container : undefined}>
             {!options.hideTitle &&
                 <Box>
-                    <Typography className={classes.centerTypo} variant="h4">
+                    <Typography className={classes.centerTypo} variant={isWidthUp('sm', props.width) ? "h4" : "h6"}>
                         Your personal goals
                         </Typography>
                 </Box>
@@ -157,4 +161,4 @@ const GoalsPage = (props) => {
 
 
 
-export default GoalsPage;
+export default withWidth()(GoalsPage);
