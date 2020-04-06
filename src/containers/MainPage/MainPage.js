@@ -16,8 +16,6 @@ import Wrapper from '../../components/Layout/Wrapper/Wrapper'
 import LoadingSpinner from '../../components/Layout/LoadingSpinner/LoadingSpinner';
 
 
-import './MainPage.css'; //to import the appropriate css file for this component
-
 
 const AsyncPageInitial = lazy(() => import('../../components/Pages/InitialPage/InitialPage'));
 
@@ -37,7 +35,7 @@ const styles = theme => ({
     //toolbar: theme.mixins.toolbar,
     body: {
         height: '100vh',
-        backgroundImage: 'url("../../images/backgrounds/background_coffee.jpg")',
+        backgroundImage: 'url("/images/backgrounds/background_coffee.jpg")',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
