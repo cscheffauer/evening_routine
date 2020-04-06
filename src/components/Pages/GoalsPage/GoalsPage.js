@@ -53,6 +53,9 @@ const useStyles = makeStyles(theme => ({
     typoNoGoals: {
         textAlign: 'center',
         marginTop: 60,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 30,
+        }
     },
     buttonAdd: {
         display: 'flex',

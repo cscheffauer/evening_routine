@@ -44,7 +44,7 @@ const useStyles = (darkMode) => makeStyles(theme => ({
         height: '100%',
         width: 250,
         [theme.breakpoints.down('sm')]: {
-            width: 250,
+            width: '65vw',
         },
         [theme.breakpoints.up('sm')]: {
             width: 350,
@@ -52,6 +52,9 @@ const useStyles = (darkMode) => makeStyles(theme => ({
     },
     media: {
         height: 200,
+        [theme.breakpoints.down('sm')]: {
+            height: 150,
+        },
         backgroundColor: darkMode ? theme.palette.secondary.main : theme.palette.primary.main,
         marginTop: 40,
     },
