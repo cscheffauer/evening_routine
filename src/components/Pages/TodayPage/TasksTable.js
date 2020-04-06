@@ -21,6 +21,7 @@ import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import Tooltip from '@material-ui/core/Tooltip';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d|2[0-3]):[0-5]\d|24:00)(:[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?$/;
 
@@ -129,7 +130,7 @@ const TasksTable = (props) => {
     return (
         <MaterialTable
             style={{
-                width: '100%',
+                width: isWidthUp('sm', props.width) ? "100%" : "85vw",
             }}
             localization={{
                 body: {
@@ -171,6 +172,9 @@ const TasksTable = (props) => {
                 selection: false,
                 sorting: false,
                 paging: false,
+                headerStyle: {
+                    fontSize: isWidthUp('sm', props.width) ? 'unset' : "2vh"
+                }
             }}
             editable={{
                 onRowAdd: newData =>
@@ -213,4 +217,4 @@ const TasksTable = (props) => {
     );
 }
 
-export default TasksTable;
+export default withWidth()(TasksTable);

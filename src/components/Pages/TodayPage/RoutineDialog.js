@@ -234,4 +234,4 @@ class RoutineDialog extends Component {
         )
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(RoutineDialog)));
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(withWidth()(RoutineDialog))));

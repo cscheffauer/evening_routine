@@ -107,7 +107,11 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         width: '90%',
+        [theme.breakpoints.down('sm')]: {
+            width: 'unset',
+        },
     },
+
     textFieldRecapDay: {
         height: '100%',
     },
@@ -280,4 +284,4 @@ class StepContent extends Component {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StepContent));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withWidth()(StepContent)));

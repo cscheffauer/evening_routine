@@ -15,6 +15,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import CollapseRoutineContent from './collapseRoutineContent';
 
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+
 import { setPageVisited } from '../../../actions/actions'
 import { HISTORY_ROUTE } from '../../../constants';
 
@@ -160,9 +162,13 @@ const HistoryPage = (props) => {
                                     </Typography>
                                 </>
                             </ListItemAvatar>
-                            <ListItemText
-                                primary={routine.tasks.filter(task => (task.done === true)).length + " of " + routine.tasks.length + " tasks completed"}
-                            />
+                            {isWidthUp('sm', props.width) ?
+                                <ListItemText
+                                    primary={routine.tasks.filter(task => (task.done === true)).length + " of " + routine.tasks.length + " tasks completed"}
+                                />
+                                :
+                                <></>
+                            }
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
                         <Collapse className={classes.collapseInnerContent} in={open.anyOpen && (open.id === routine.id)} timeout="auto" unmountOnExit>
@@ -186,4 +192,4 @@ const HistoryPage = (props) => {
         </Container>);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(HistoryPage));

@@ -41,18 +41,7 @@ const styles = theme => ({
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-    },
-    content: {
-        [theme.breakpoints.down('sm')]: {
-            marginTop: 56,
-        },
-        [theme.breakpoints.up('sm')]: {
-            marginTop: 64,
-            marginLeft: 200,
-        },
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
+    }
 });
 
 

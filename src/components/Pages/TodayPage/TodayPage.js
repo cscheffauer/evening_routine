@@ -8,6 +8,7 @@ import { withStyles, withTheme } from '@material-ui/core/styles';
 import RoutineDialog from './RoutineDialog';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -56,6 +57,8 @@ const styles = (theme => ({
         flexDirection: 'column',
         [theme.breakpoints.down('md')]: {
             height: '80vh',
+            paddingLeft: 0,
+            paddingRight: 0,
         },
         [theme.breakpoints.up('md')]: {
             height: 'calc(100vh - (112px))',
@@ -182,7 +185,7 @@ class TodayPage extends Component {
 
                 <Box className={classes.boxTasks} >
                     <Box>
-                        <Typography className={classes.centerTypo} variant="h4">
+                        <Typography className={classes.centerTypo} variant={isWidthUp('sm', this.props.width) ? "h4" : "h5"}>
                             {routineToShow.tasks ?
                                 (
                                     "Your tasks for " + getYourTasksLabel("Tasks")
@@ -231,7 +234,7 @@ class TodayPage extends Component {
 
                 <Box className={classes.boxRecap} >
                     <Box>
-                        <Typography className={classes.centerTypo} variant="h4">
+                        <Typography className={classes.centerTypo} variant={isWidthUp('sm', this.props.width) ? "h4" : "h5"}>
                             {routineToShow.tasks ?
                                 (
                                     "Your recap of " + getYourTasksLabel("Recap")
@@ -287,4 +290,4 @@ class TodayPage extends Component {
             </Container>);
     };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(TodayPage)));
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme(withStyles(styles)(withWidth()(TodayPage))));
