@@ -35,7 +35,7 @@ const styles = theme => ({
     //toolbar: theme.mixins.toolbar,
     body: {
         height: '100vh',
-        backgroundImage: 'url("/images/backgrounds/background_coffee.jpg")',
+        backgroundImage: 'url("images/backgrounds/background_coffee.jpg")',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
